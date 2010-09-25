@@ -1,0 +1,20 @@
+if test "$1" == "help" || ! test  "$#" -eq 1
+then
+  echo "
+Create and place DSA public key on a remote ssh server.
+Usage: $0 [user@]hostname 
+"
+  exit 1
+fi
+
+user_host=$1
+
+# We have to have a key first
+$(dirname $0)/ssh-keygen-default
+
+# Double test, was the key created?
+[ -f $HOME/.ssh/id_dsa.pub ] && \
+  # Create .ssh, and only if it was just created, set the permissions
+  # Upload the local public key and append it to remote's authorized_keys file
+  ssh $user_host mkdir -p .ssh \&\& chmod 700 .ssh\; echo "`cat $HOME/.ssh/id_dsa.pub` >> .ssh/authorized_keys" &&
+    echo SSH Link established...

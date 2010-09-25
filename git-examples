@@ -1,0 +1,6 @@
+cat <<- EOf
+
+#-f fetch
+git remote add -f -t master -m master origin git://example.com/git.git/
+
+EOf
