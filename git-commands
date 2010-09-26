@@ -1,0 +1,7 @@
+git_url=${1:-git://example.com/git.git/}
+cat <<- EOf
+
+#-f fetch
+git remote add -f -t master -m master origin $git_url
+
+EOf

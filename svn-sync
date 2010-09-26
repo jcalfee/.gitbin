@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# Generate a preview and offer to execute any svn commands needed
+# to sync this directory with the repository.
+
+comments=$1
+tmp=`mktemp /tmp/temp.XXXXXXX`
+trap 'rm $tmp' EXIT;
+svn status | awk '
+  /^\?/ { 
+    system ("find " $2 " -printf \"svn add -N '\''%p'\''\n\"" )
+    next 
+  }
+  /^M|^.M|^A|^D/ { print "#svn commit " $2 " (" $1 ")"; next }
+  /^!/ { print "svn delete '\''" $2 "'\''"; next }
+  // { print "#!Ignoring > " $0 }
+' > $tmp 
+test -d .svn || exit 1
+
+
+# Example:  echo 'war/WEB-INF/classes.*' >> svn-sync-excludes
+if test -f svn-sync-excludes
+then
+  egrep -v -f svn-sync-excludes $tmp > ${tmp}2
+  mv ${tmp}2 $tmp
+fi
+
+if test -f svn-sync-excludes
+then
+  egrep -f svn-sync-excludes $tmp > ${tmp}2
+  mv ${tmp}2 $tmp
+fi
+
+cat $tmp
+
+#Exit if there are no commands to run
+egrep --max-count=1 "^svn |^#svn commit " $tmp >/dev/null || exit 1 
+
+if test "${comments}z" != "z"
+then
+  echo "svn commit --message '$comments'" | tee -a $tmp
+else
+  echo "svn commit -message ''" | tee -a $tmp
+fi
+
+read -p "Proceed (y/n)? " yn
+case $yn in
+  [Yy] ) ;; [Nn] ) exit 1 ;;
+  * ) echo "Please answer y or n"; exit 1 ;;
+esac
+
+sh $tmp
+

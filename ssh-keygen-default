@@ -1,0 +1,6 @@
+if test "$1" == "help"
+then
+  echo "Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
+  exit 1
+fi
+[ ! -f $HOME/.ssh/id_dsa.pub ] && ssh-keygen -t dsa

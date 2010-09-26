@@ -1,0 +1,138 @@
+#!/bin/bash
+
+# work in progress .. helps mirror ascii and binary data
+
+case $1 in
+  vi ) vi $0; exit 1;;
+esac
+
+if test "$1" == "script"
+then
+  echo '#Script used to call prj_helper
+export user host  # Use for remote locations
+export project    # Defaults to current directory (local)
+export projects   # Defaults /home/$user/projects
+export subversion # Defaults /home/$user/subversion
+
+case $1 in
+  remote ) user=myuser; host=myhost ;;
+  local ) host=localhost;; # Commands work locally too
+  help ) prj_helper help; exit 1;;
+  vi ) vi $0; exit 1;; # Edit this file
+  * ) cat $0; exit 1;; # Display this file
+esac
+shift 1
+
+prj_helper $*
+'
+  exit 1
+fi
+
+function prj_help {
+  echo "
+  Usage: $0 [command]
+
+    No command will ssh to the host.  Any unrecognized command
+    becomes a remote execution command.
+     
+    Command: get or put #Preview then rsync project.
+             scpfrom (file) | scpto (file) #SCP individual files.
+             co [trunk] or ci #New Subversion project checkout or checkin
+             lnk #Append local DSA key to remote authorized_keys. Used for
+                 #SSH authentication.
+             env #Source functions in this environment
+"
+}
+
+
+_pwd=`pwd`
+export user_host=$user${user:+@}$host
+export project=${project:-`basename "$_pwd"`}
+export projects=${projects:-/home/$user/projects}
+export subversion=${subversion:-/home/$user/subversion}
+
+export rsync_path=${rsync_path:-$projects/$project}
+export svn_path=${svn_path:-$subversion/$project}
+
+function ssh_lnk {
+  [ ! -f $HOME/.ssh/id_dsa.pub ] && ssh-keygen -t dsa
+  [ -f $HOME/.ssh/id_dsa.pub ] && \
+    ssh $user_host mkdir .ssh\; echo "`cat $HOME/.ssh/id_dsa.pub` >> .ssh/authorized_keys" && \
+      echo SSH Link established...
+}
+
+function rsync_test_and_run {
+  tmp=`mktemp /tmp/rsync.XXXXXXXX`
+  trap 'rm $tmp' EXIT
+  rsync_cmd=$1
+  echo rsync $rsync_cmd --dry-run | tee $tmp
+  sh $tmp
+  read -p "Proceed (y/n)? " yn
+  case $yn in
+    [Yy] )
+      echo rsync $rsync_cmd > $tmp
+      sh $tmp
+      ;;
+    [Nn] ) return 1;;
+    * ) echo "Please answer y or n.";;
+  esac
+}
+
+function rsync_filters {
+  test -f rsync_includes && rsync_parms="--include-from=rsync_includes"
+  test -f rsync_excludes && rsync_parms="$rsync_parms --exclude-from=rsync_excludes"
+  test -f rsync_filters && rsync_parms="$rsync_parms --filter='merge rsync_filters'"
+}
+
+function rsync_put {
+  echo UPLOAD Test Run...
+  ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+  rsync_filters
+  rsync_test_and_run "$rsync_parms --delete --compress -e ssh -va '${1:-.}' '$user_host${user_host:+:}$rsync_path/$1'"
+}
+
+function rsync_get {
+  echo DOWNLOAD Test Run...
+  rsync_filters
+  rsync_test_and_run "$rsync_parms --delete --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${1:-.}' '${1:-.}'"
+}
+
+function svn_uri {
+  if [ "$user_host" == "" ] && test -e "$svn_path"
+  then
+    svn_uri=file:$svn_path
+  else
+    svn_uri=svn+ssh://$user_host$svn_path
+  fi
+}
+
+function svn_co {
+  svn_uri
+  svn co $svn_uri/$* .
+}
+
+function svn_ci {
+  if [ "$user_host" == "" ]
+  then
+    svnadmin create $svn_path
+    svn import file:$svn_path
+  else
+    ssh $user_host svnadmin create $svn_path
+    svn_uri
+    svn import $svn_uri
+  fi
+}
+
+command=$1
+case $command in
+  help ) prj_help ;;
+  env ) ;; # user is after environment only
+  lnk ) ssh_lnk ;;
+  get ) shift 1; rsync_get $1 ;;
+  put ) shift 1; rsync_put $1 ;;
+  co ) shift 1; svn_co $*;;
+  ci ) svn_ci ;;
+  scpto ) shift 1; scp -rp "$1" $user@$host:"${2-.}" ;;
+  scpfrom ) shift 1; scp -rp $user@$host:"$1" "${2-.}" ;;
+  * ) ssh $user_host $* ;;
+esac
