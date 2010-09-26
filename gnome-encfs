@@ -7,7 +7,7 @@
 # hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
 #
 # Added "-o" "nonempty" parameters to encfs, todo: python pass-through 
-# the -o aparamter to fuse - 09/25/2010
+# the -o aparamter to encfs - 09/25/2010
 # =============================================================================
 
 
