@@ -1,0 +1,7 @@
+
+connection_name=${1:-sonicwall}
+
+echo "Closing the VPN connection ${connection_name} and stopping ipsec"
+set -o verbose
+sudo ipsec whack --name ${connection_name} --terminate
+sudo ipsec setup --stop

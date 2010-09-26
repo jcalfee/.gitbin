@@ -1,0 +1,18 @@
+
+connection_name=${1:-sonicwall}
+
+echo "If you change the configuration files, you'll need to run 'sudo ipsec auto --replace ${connection_name}' to reload the file"
+
+vpn-sonicwall-down
+
+sudo ipsec setup --start
+test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
+test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
+test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
+test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
+test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
+
+set -o verbose
+sudo ipsec auto --add ${connection_name} 
+sudo ipsec whack --name ${connection_name} --initiate
+

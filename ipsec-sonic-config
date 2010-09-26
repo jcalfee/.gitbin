@@ -1,0 +1,72 @@
+# TODO: document configuration on the Sonicwall
+
+# INSTALL
+# Debian/Ubuntu: sudo apt-get install openswan
+
+# USAGE:
+#   ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
+#   ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
+
+# Overwrite using variables:
+#   home=@home connection_name=work ike=... ipsec-sonic-config ....
+
+esp=${esp:-3DES-SHA1}
+ike=${ike:-3DES-SHA1-modp1024}
+
+connection_name=${connection_name:-sonicwall}
+home=${home:-@home}
+
+#EoUsage End of Usage
+if test $# -ne 5 # Must have exactally 5 arguments
+then
+   # .. or .. Show usage above
+   egrep EoUsage ipsec-sonic-config -B999 -A1
+   exit 1 #1=error
+fi
+
+id=$1
+secret=$2
+
+# Give owner write permission, ipsec may taketh away
+sudo chmod o+w /etc/ipsec.secrets /etc/ipsec.conf
+
+echo Appending /etc/ipsec.secrets
+sudo cat >> /etc/ipsec.secrets <<-eof
+${home} ${id} : PSK "${secret}"
+eof
+
+sonicwall_ip_address=$3
+your_subnet_mask=$4
+vpn_subnet_mask=$5
+
+#3DES-SHA1-modp1024 only works with Sonic configured using Group5
+
+echo Appending /etc/ipsec.conf
+sudo cat >> /etc/ipsec.conf <<-eof
+conn ${connection_name}
+  #defaultroute or your ip
+  left=%defaultroute
+  # your subnet mask
+  leftsubnet=${your_subnet_mask}
+  leftid=${home}
+  leftxauthclient=yes
+  # sonicwall ip address
+  right=${sonicwall_ip_address}
+  # vpn subnet/mask
+  rightsubnet=${vpn_subnet_mask}
+  rightxauthserver=yes
+  # id
+  rightid=${id}
+  keyingtries=0
+  aggrmode=yes
+  auto=add
+  auth=esp
+  esp=${esp}
+  ike=${ike}
+  authby=secret
+  pfs=no
+  #xauth=yes
+
+eof
+
+echo Done
