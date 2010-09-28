@@ -8,7 +8,7 @@ esac
 
 if test "$1" == "script"
 then
-  echo '#Script used to call prj_helper
+  echo '#Script used to call prj-helper
 export user host  # Use for remote locations
 export project    # Defaults to current directory (local)
 export projects   # Defaults /home/$user/projects
@@ -17,13 +17,13 @@ export subversion # Defaults /home/$user/subversion
 case $1 in
   remote ) user=myuser; host=myhost ;;
   local ) host=localhost;; # Commands work locally too
-  help ) prj_helper help; exit 1;;
+  help ) prj-helper help; exit 1;;
   vi ) vi $0; exit 1;; # Edit this file
   * ) cat $0; exit 1;; # Display this file
 esac
 shift 1
 
-prj_helper $*
+prj-helper $*
 '
   exit 1
 fi
