@@ -78,7 +78,7 @@ case "$cmd" in
 ;;
 "put")
   echo UPLOAD Test Run...
-  echo ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+  ${host:+ssh $user_host} mkdir -vp "$rsync_path"
   rsync_test_and_run "$rsync_env_filters --delete --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
 ;;
 esac
