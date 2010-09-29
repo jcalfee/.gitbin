@@ -1,3 +1,4 @@
+#!/bin/bash
 # TODO: document configuration on the Sonicwall
 
 # INSTALL
@@ -15,12 +16,14 @@ ike=${ike:-3DES-SHA1-modp1024}
 
 connection_name=${connection_name:-sonicwall}
 home=${home:-@home}
+usage=USAGE_END
 
-#EoUsage End of Usage
 if test $# -ne 5 # Must have exactally 5 arguments
 then
    # .. or .. Show usage above
-   egrep EoUsage ipsec-sonic-config -B999 -A1
+   echo
+   grep $usage $0 -B999 -A0 | head -n -1
+   echo
    exit 1 #1=error
 fi
 

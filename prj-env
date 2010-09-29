@@ -1,0 +1,58 @@
+#!/bin/bash
+# Usage:
+#  . prj-env alias,var1,etc...
+
+# Example:
+#  . prj-env jd,user,host
+
+# Creates ~/.prj-env/jd script.  The jd script sets
+# the variables (var1,etc...).  Intially, this script will
+# prompt for variables that are not already found in the jd
+# environment.  If all values are already available, this 
+# script runs silently.
+
+#  export user=john
+#  export host=johnDoe314.example.com
+
+# Alias is a short word used to retrieve envirnonment.
+# Prompts user then saves response in ~/.prj-env/alias
+usage=USAGE_END
+
+IFS=',' read -ra ARRAY <<< "$1"
+if test $# -ne 1 || test ${#ARRAY[*]} -lt 2
+then
+  echo
+  grep $usage $0 -B999 -A0 | head -n -1
+  echo
+  exit 1
+fi
+
+alias=${ARRAY[0]}
+unset ARRAY[0]
+
+mkdir -p ~/.prj-env
+touch ~/.prj-env/$alias
+chmod u+x ~/.prj-env/$alias
+
+save=0
+for var in ${ARRAY[*]}
+do
+  # If we do not have a variable for this, prompt and save one
+  if ! $(egrep "export $var=" ~/.prj-env/$alias > /dev/null)
+  then
+    read -p "$alias: export $var=" val
+    
+    # Save the new variable
+    echo "export $var=$val" >> ~/.prj-env/$alias
+    save=1
+  fi
+  
+done
+
+if test $save -eq 1
+then
+  echo "Updated ~/.prj-env/$alias"
+fi
+
+. ~/.prj-env/$alias
+

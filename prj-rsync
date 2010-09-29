@@ -1,0 +1,86 @@
+#!/bin/bash
+# Uses a path relitave to the home directory and present
+# working directory.  That path is used to folders with a 
+# remote host.
+ 
+# Example:
+#   /home/doej/projects/examples$ prj-rsync my_server1 (get|put)
+# OR
+#   /home/doej/projects/examples$ prj-rsync my_server1 (get|put) [path/]file
+
+# Sync ~/projects/examples from hosting1 account to the 
+# current directory (also ~/projects/examples).  If my_server1 is 
+# un-defined, interactivly prompt and record the user name and 
+# host name.
+
+# get - sync from server to local directory
+# put - sync from local directory to server
+usage=USAGE_END
+
+alias=$1
+cmd=$2
+path=$3
+
+if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put") 
+then
+   # .. or .. Show usage above
+   echo
+   grep $usage $0 -B999 -A0 | head -n -1
+   echo
+   exit 1 #1=error
+fi
+
+#############
+# Environment
+#
+. prj-env $alias,user,host
+user_host=$user${user:+@}$host
+
+#Example: /home/jcalfee/bin becomes ~/bin
+rsync_path=`pwd|sed "s?$HOME?~?g"`
+
+unset rsync_env_filters
+
+test -f .rsync_includes && 
+  rsync_env_filters="--include-from=.rsync_includes"
+  
+test -f .rsync_excludes && 
+  rsync_env_filters="$rsync_env_filters --exclude-from=.rsync_excludes"
+  
+test -f .rsync_filters && 
+  rsync_env_filters="$rsync_env_filters --filter='merge .rsync_filters'"
+
+#############
+function rsync_test_and_run {
+  tmp=`mktemp /tmp/rsync.XXXXXXXX`
+  trap 'rm $tmp' EXIT
+  rsync_cmd=$1
+  echo rsync $rsync_cmd --dry-run | tee $tmp
+  sh $tmp
+  read -p "Proceed (y/n)? " yn
+  case $yn in
+    [Yy] )
+      echo rsync $rsync_cmd > $tmp
+      sh $tmp
+      ;;
+    [Nn] ) return 1;;
+    * ) echo "Please answer y or n.";;
+  esac
+}
+
+#########
+# Main
+#
+case "$cmd" in
+"get") 
+  echo DOWNLOAD Test Run...
+  rsync_test_and_run "$rsync_env_filters --delete --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${path:-.}' '${path:-.}'"
+;;
+"put")
+  echo UPLOAD Test Run...
+  echo ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+  rsync_test_and_run "$rsync_env_filters --delete --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
+;;
+esac
+
+

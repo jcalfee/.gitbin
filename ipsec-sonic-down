@@ -1,4 +1,4 @@
-
+#!/bin/bash
 connection_name=${1:-sonicwall}
 
 echo "Closing the VPN connection ${connection_name} and stopping ipsec"
