@@ -15,6 +15,16 @@
 
 # get - sync from server to local directory
 # put - sync from local directory to server
+# cmd - just show the rsync command and exit
+
+# Other commands are available by way of variables.
+# Example:
+#   echo= prj-rsync my_server1 get
+# OR
+#   force= prj-rsync my_server1 get
+
+# $force - skip the the dry-run and 'are you sure'
+# $echo  - just echo the command and exit
 usage=USAGE_END
 
 alias=$1
@@ -52,20 +62,37 @@ test -f .rsync_filters &&
 
 #############
 function rsync_test_and_run {
+  rsync_cmd=$1
+  if test -n "${echo+x}"
+  then
+    if test -n "${force+x}"
+    then
+      echo rsync $rsync_cmd 
+    else
+      echo rsync $rsync_cmd --dry-run
+    fi
+    return
+  fi
   tmp=`mktemp /tmp/rsync.XXXXXXXX`
   trap 'rm $tmp' EXIT
-  rsync_cmd=$1
-  echo rsync $rsync_cmd --dry-run | tee $tmp
-  sh $tmp
-  read -p "Proceed (y/n)? " yn
-  case $yn in
-    [Yy] )
-      echo rsync $rsync_cmd > $tmp
-      sh $tmp
-      ;;
-    [Nn] ) return 1;;
-    * ) echo "Please answer y or n.";;
-  esac
+  
+  if test -n "${force+x}"
+  then
+    echo rsync $rsync_cmd > $tmp
+    sh $tmp
+  else
+    echo rsync $rsync_cmd --dry-run | tee $tmp
+    sh $tmp
+    read -p "Proceed (y/n)? " yn
+    case $yn in
+      [Yy] )
+        echo rsync $rsync_cmd > $tmp
+        sh $tmp
+        ;;
+      [Nn] ) return 1;;
+      * ) echo "Please answer y or n.";;
+    esac
+  fi
 }
 
 #########
@@ -73,14 +100,15 @@ function rsync_test_and_run {
 #
 case "$cmd" in
 "get") 
-  echo DOWNLOAD Test Run...
+  echo DOWNLOAD...
   rsync_test_and_run "$rsync_env_filters --delete --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${path:-.}' '${path:-.}'"
 ;;
 "put")
-  echo UPLOAD Test Run...
+  echo UPLOAD...
   ${host:+ssh $user_host} mkdir -vp "$rsync_path"
   rsync_test_and_run "$rsync_env_filters --delete --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
 ;;
+
 esac
 
 
