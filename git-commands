@@ -1,3 +1,4 @@
+#!/bin/bash
 git_url=${1:-git://example.com/git.git/}
 cat <<- EOf
 
