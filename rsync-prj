@@ -9,9 +9,15 @@
 #   /home/doej/projects/examples$ prj-rsync my_server1 (get|put) [path/]file
 
 # Sync ~/projects/examples from hosting1 account to the 
-# current directory (also ~/projects/examples).  If my_server1 is 
-# un-defined, interactivly prompt and record the user name and 
-# host name.
+# current directory (also ~/projects/examples). 
+
+#
+# my_server1 can be some short made-up alias (in that case, interactivly prompt 
+# and record the host and user) or this can be in the ssh format:
+#
+#   user@hostname
+#
+
 
 # get - sync from server to local directory
 # put - sync from local directory to server
@@ -25,7 +31,8 @@
 
 # $force - skip the the dry-run and 'are you sure'
 # $echo  - just echo the command and exit
-usage=USAGE_END
+
+#USAGE_END
 
 alias=$1
 cmd=$2
@@ -35,7 +42,7 @@ if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put")
 then
    # .. or .. Show usage above
    echo
-   grep $usage $0 -B999 -A0 | head -n -1
+   grep -m 1 USAGE_END $0 -B999 -A0 | head -n -1
    echo
    exit 1 #1=error
 fi
@@ -43,8 +50,13 @@ fi
 #############
 # Environment
 #
-. prj-env $alias,user,host
-user_host=$user${user:+@}$host
+if test $(echo $alias | egrep "@")
+then
+   user_host=$alias
+else
+   . prj-env $alias,user,host
+   user_host=$user${user:+@}$host
+fi
 
 #Example: /home/jcalfee/bin becomes ~/bin
 rsync_path=`pwd|sed "s?$HOME?~?g"`

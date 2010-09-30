@@ -34,25 +34,18 @@ mkdir -p ~/.prj-env
 touch ~/.prj-env/$alias
 chmod u+x ~/.prj-env/$alias
 
-save=0
 for var in ${ARRAY[*]}
 do
   # If we do not have a variable for this, prompt and save one
   if ! $(egrep "export $var=" ~/.prj-env/$alias > /dev/null)
   then
-    read -p "$alias: export $var=" val
+    read -p "~/.prj-env/$alias: export $var=" val
     
     # Save the new variable
     echo "export $var=$val" >> ~/.prj-env/$alias
-    save=1
   fi
   
 done
-
-if test $save -eq 1
-then
-  echo "Updated ~/.prj-env/$alias"
-fi
 
 . ~/.prj-env/$alias
 
