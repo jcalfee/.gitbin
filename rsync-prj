@@ -1,38 +1,42 @@
 #!/bin/bash
-# Uses a path relitave to the home directory and present
-# working directory.  That path is used to folders with a 
-# remote host.
- 
+# Calculates a path relative to the home directory.  That path is used to Sync 
+# folders with a remote host.  
+# 
+# Home directories may differ, but the path relative to the home directory 
+# is the same.  Under this configuration, it becomes simple to create and
+# use the sync commands based on the current working directory.  
+# 
+# Unless you force it, this script will always preview and prompt before 
+# actaully making changes.
+# 
 # Example:
 #   /home/doej/projects/examples$ prj-rsync my_server1 (get|put)
 # OR
 #   /home/doej/projects/examples$ prj-rsync my_server1 (get|put) [path/]file
-
-# Sync ~/projects/examples from hosting1 account to the 
-# current directory (also ~/projects/examples). 
-
+# 
+# Sync ~/projects/examples from my_server1 account with 
+# current directory (also ~/projects/examples).  
+# 
 #
 # my_server1 can be some short made-up alias (in that case, interactivly prompt 
 # and record the host and user) or this can be in the ssh format:
 #
 #   user@hostname
-#
-
-
+# 
 # get - sync from server to local directory
 # put - sync from local directory to server
-# cmd - just show the rsync command and exit
-
-# Other commands are available by way of variables.
+# 
+# Other commands are available by way of variables. 
+# 
 # Example:
 #   echo= prj-rsync my_server1 get
 # OR
 #   force= prj-rsync my_server1 get
-
-# $force - skip the the dry-run and 'are you sure'
-# $echo  - just echo the command and exit
-
-#USAGE_END
+# 
+# force - skip the the dry-run and 'are you sure'
+# echo  - just echo the command and exit
+# 
+# Force and echo may be combined.
 
 alias=$1
 cmd=$2
@@ -40,15 +44,15 @@ path=$3
 
 if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put") 
 then
-   # .. or .. Show usage above
+   # Show usage above
    echo
-   grep -m 1 USAGE_END $0 -B999 -A0 | head -n -1
+   egrep "^# " $0 | sed -e 's/^# /  /g'
    echo
    exit 1 #1=error
 fi
 
 #############
-# Environment
+#Environment
 #
 if test $(echo $alias | egrep "@")
 then
@@ -108,7 +112,7 @@ function rsync_test_and_run {
 }
 
 #########
-# Main
+#Main
 #
 case "$cmd" in
 "get") 
