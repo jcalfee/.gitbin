@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# work in progress .. helps mirror ascii and binary data
+# Deprecated, moving this out into different scripts
+
+##usage
 
 case $1 in
   vi ) vi $0; exit 1;;

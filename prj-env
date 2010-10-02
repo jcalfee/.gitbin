@@ -1,29 +1,26 @@
 #!/bin/bash
-# Usage:
-#  . prj-env alias,var1,etc...
-
-# Example:
-#  . prj-env jd,user,host
-
-# Creates ~/.prj-env/jd script.  The jd script sets
-# the variables (var1,etc...).  Intially, this script will
-# prompt for variables that are not already found in the jd
-# environment.  If all values are already available, this 
-# script runs silently.
-
-#  export user=john
-#  export host=johnDoe314.example.com
-
-# Alias is a short word used to retrieve envirnonment.
-# Prompts user then saves response in ~/.prj-env/alias
-usage=USAGE_END
+#  Usage:
+#   . prj-env alias,var1,etc...
+   
+#  Example:
+#   . prj-env jd,user,host
+   
+#  Creates ~/.prj-env/jd script.  The jd script sets
+#  the variables (var1,etc...).  Intially, this script will
+#  prompt for variables that are not already found in the jd
+#  environment.  If all values are already available, this 
+#  script runs silently.
+   
+#   export user=john
+#   export host=johnDoe314.example.com
+   
+#  Alias is a short word used to retrieve envirnonment.
+#  Prompts user then saves response in ~/.prj-env/alias
 
 IFS=',' read -ra ARRAY <<< "$1"
-if test $# -ne 1 || test ${#ARRAY[*]} -lt 2
+if test $# -ne 1 || test ${#ARRAY[*]} -lt 2 || test -z ${ARRAY[0]}
 then
-  echo
-  grep $usage $0 -B999 -A0 | head -n -1
-  echo
+  sh $(dirname $0)/prj-usage $0
   exit 1
 fi
 
