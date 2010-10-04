@@ -14,6 +14,12 @@ then
 fi
 
 user_host=$1
+if [[ ! $user_host =~ "@" ]]
+then
+  alias=$user_host
+  . $(dirname $0)/prj-env $alias,user,host
+  user_host=$user${user:+@}$host
+fi
 
 # We have to have a key first
 sh $(dirname $0)/ssh-keygen-default
