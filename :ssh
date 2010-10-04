@@ -2,7 +2,7 @@
 #  Wrapps the SSH command adding support for alias host names.
 #  
 #  Example:
-#    /home/doej/projects/examples$ ssh-prj my_server1 [ssh arguments]
+#    :ssh my_server1 [ssh arguments]
 #  
 #  my_server1 is a short made-up alias.  The first time, this command 
 #  interactivly prompts for the host and user values and saves them for the 
@@ -10,9 +10,9 @@
 #  
 #  Examples:
 #   
-#   SSH to to a remote host:  ssh-prj dx
-#   List a remote directory:  ssh-prj dx ls
-#   List a remote directory:  echo ls|ssh-prj dx
+#   SSH to to a remote host:  :ssh dx
+#   List a remote directory:  :ssh dx ls
+#   List a remote directory:  echo ls|:ssh dx
 #  
 alias=$1
 . $(dirname $0)/prj-env $alias,user,host
