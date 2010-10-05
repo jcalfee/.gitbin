@@ -1,3 +1,7 @@
+
+
+# Deprecated, moving out to individual commands
+
 The prj_helper bash script is useful for syncing projects and information over SSH. The script offers short-cuts for SSH, rsync, and SVN (subversion).
 
 The script should be executable:
