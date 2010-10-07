@@ -23,8 +23,9 @@
 #  get - sync from server to local directory
 #  put - sync from local directory to server
 #  
-#  -f, force - skip the the dry-run and 'are you sure'
-#  -e, echo  - just echo the command and exit
+#  -f, force  - skip the the dry-run and 'are you sure'
+#  -e, echo   - just echo the command and exit
+#  -d, delete - delete extraneous files from dest dir
 #  
 #  Suffix commands to the main command: get-f, get-e, get-fe
 #  
@@ -46,6 +47,7 @@ cmd=${ARRAY[0]}
 parms=${ARRAY[1]}
 echo $parms | grep "f" > /dev/null && force=
 echo $parms | grep "e" > /dev/null && echo=
+echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
 
 # Example: get-f-c becomes just "get"
 
@@ -109,7 +111,7 @@ function rsync_test_and_run {
 case "$cmd" in
 get*) 
   echo DOWNLOAD...
-  rsync_test_and_run "$rsync_parms --delete --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${path:-.}' '${path:-.}'"
+  rsync_test_and_run "$rsync_parms --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${path:-.}' '${path:-.}'"
 ;;
 put*)
   if test -n "${echo+x}"
@@ -119,7 +121,7 @@ put*)
      ${host:+ssh $user_host} mkdir -vp "$rsync_path"
   fi
   echo UPLOAD...
-  rsync_test_and_run "$rsync_parms --delete --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
+  rsync_test_and_run "$rsync_parms --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
 ;;
 
 esac
