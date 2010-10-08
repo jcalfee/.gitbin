@@ -27,9 +27,8 @@
 #  -e, echo   - just echo the command and exit
 #  -d, delete - delete extraneous files from dest dir
 #  
-#  Suffix commands to the main command: get-f, get-e, get-fe
+#  Suffix commands to the main command: get-f, get-e, get-fed
 #  
-
 
 alias=$1
 cmd=$2
@@ -43,13 +42,11 @@ then
 fi
 
 IFS='-' read -ra ARRAY <<< "$cmd"
-cmd=${ARRAY[0]}
+cmd=${ARRAY[0]} # get-fc becomes just "get"
 parms=${ARRAY[1]}
 echo $parms | grep "f" > /dev/null && force=
 echo $parms | grep "e" > /dev/null && echo=
 echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
-
-# Example: get-f-c becomes just "get"
 
 #############
 #Environment
@@ -57,9 +54,16 @@ echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
 . prj-env $alias,user,host
 user_host=$user${user:+@}$host
 
+if [[ $path == /* ]]
+then
+  # User is providing a more specific path and does not
+  # want to the relative home dir path.  
+  specific_path=
+else
+  #Example: /home/jcalfee/bin becomes ~/bin
+  rsync_path=`pwd|sed "s?$HOME?~?g"`
+fi
 
-#Example: /home/jcalfee/bin becomes ~/bin
-rsync_path=`pwd|sed "s?$HOME?~?g"`
 
 test -f .rsync_includes && 
   rsync_parms="$rsync_parms --include-from=.rsync_includes"
@@ -71,7 +75,7 @@ test -f .rsync_filters &&
   rsync_parms="$rsync_parms --filter='merge .rsync_filters'"
 
 #############
-function rsync_test_and_run {
+function rsync_run {
   rsync_cmd=$1
   if test -n "${echo+x}"
   then
@@ -106,22 +110,36 @@ function rsync_test_and_run {
 }
 
 #########
-#Main
+# Main
 #
 case "$cmd" in
 get*) 
   echo DOWNLOAD...
-  rsync_test_and_run "$rsync_parms --compress -e ssh -va '$user_host${user_host:+:}$rsync_path/${path:-.}' '${path:-.}'"
+  if test -z ${specific_path+x}
+  then
+    rsync_run "$rsync_parms --compress -e ssh -va \"$user_host${user_host:+:}$rsync_path/$path\" \"${path:-.}\""
+  else
+    rsync_run "$rsync_parms --compress -e ssh -va \"$user_host${user_host:+:}$path\" ."
+  fi
 ;;
 put*)
   if test -n "${echo+x}"
   then
      echo ${host:+ssh $user_host} mkdir -vp "$rsync_path"
   else
-     ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+     # Do not mkdir if a specific path was provided
+     if test -n ${specific_path+x}
+     then
+       ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+     fi 
   fi
   echo UPLOAD...
-  rsync_test_and_run "$rsync_parms --compress -e ssh -va '${path:-.}' '$user_host${user_host:+:}$rsync_path/$path'"
+  if test -z ${specific_path+x}
+  then
+    rsync_run "$rsync_parms --compress -e ssh -va \"${path:-.}\" \"$user_host${user_host:+:}$rsync_path/$path\""
+  else
+    rsync_run "$rsync_parms --compress -e ssh -va . \"$user_host${user_host:+:}$path\""
+  fi
 ;;
 
 esac
