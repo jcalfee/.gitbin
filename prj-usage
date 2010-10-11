@@ -1,4 +1,4 @@
 #!/bin/bash
-echo
-egrep "^#  " $1 | sed -e 's/^#  //g'
+echo $(basename $1)
+egrep "^## " $1 | sed -e 's/^## //g'
 echo

@@ -1,5 +1,5 @@
 #!/bin/bash
-#  Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
+## Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
 
 if test ! -f $HOME/.ssh/id_dsa.pub 
 then

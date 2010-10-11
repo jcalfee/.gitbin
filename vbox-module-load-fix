@@ -1,0 +1,7 @@
+#!/bin/bash
+## If Ubuntu vbox bridged networking modules are needed and do not load
+## try this alternative method using insmod.
+set -o verbose
+sudo insmod /lib/modules/`uname -r`/updates/dkms/vboxnetflt.ko
+sudo insmod /lib/modules/`uname -r`/updates/dkms/vboxnetadp.ko
+

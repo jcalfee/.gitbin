@@ -1,34 +1,36 @@
 #!/bin/bash
-#  Calculates a path relative to the home directory.  That path is used to Sync 
-#  folders with a remote host.  
-#  
-#  Home directories may differ, but the path relative to the home directory 
-#  is the same.  Under this configuration, it becomes simple to create and
-#  use the sync commands based on the current working directory.  
-#  
-#  Unless you force it, this script will always preview and prompt before 
-#  actaully making changes.
-#  
-#  Example:
-#    /home/doej/projects/examples$ :rsync my_server1 (get|put)
-#  OR
-#    /home/doej/projects/examples$ :rsync my_server1 (get|put) [path/]file
-#  
-#  Sync ~/projects/examples from my_server1 account with 
-#  current directory (also ~/projects/examples).  
-#  
-#  my_server1 can be some short made-up alias; interactivly prompt and record 
-#  the host and user.
-#  
-#  get - sync from server to local directory
-#  put - sync from local directory to server
-#  
-#  -f, force  - skip the the dry-run and 'are you sure'
-#  -e, echo   - just echo the command and exit
-#  -d, delete - delete extraneous files from dest dir
-#  
-#  Suffix commands to the main command: get-f, get-e, get-fed
-#  
+## This script and it's usage is still changing
+## 
+## Calculates a path relative to the home directory.  That path is used to Sync 
+## folders with a remote host.  
+## 
+## Home directories may differ, but the path relative to the home directory 
+## is the same.  Under this configuration, it becomes simple to create and
+## use the sync commands based on the current working directory.  
+## 
+## Unless you force it, this script will always preview and prompt before 
+## actually making changes.
+## 
+## Example:
+##   /home/doej/projects/examples$ rscp my_server1 (get|put)
+## OR
+##   /home/doej/projects/examples$ rscp my_server1 (get|put) [path/]file
+## 
+## Sync ~/projects/examples from my_server1 account with 
+## current directory (also ~/projects/examples).  
+## 
+## my_server1 can be some short made-up alias; interactivly prompt and record 
+## the host and user.
+## 
+## get - sync from server to local directory
+## put - sync from local directory to server
+## 
+## -f, force  - skip the the dry-run and 'are you sure'
+## -e, echo   - just echo the command and exit
+## -d, delete - delete extraneous files from dest dir
+## 
+## Suffix commands to the main command: get-f, get-e, get-fed
+## 
 
 alias=$1
 cmd=$2
