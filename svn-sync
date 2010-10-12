@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Generate a preview and offer to execute any svn commands needed
-# to sync this directory with the repository.
+## Generate a preview and offer to execute any svn commands needed
+## to sync this directory with the repository.
 
 comments=$1
 tmp=`mktemp /tmp/temp.XXXXXXX`

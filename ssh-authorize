@@ -1,11 +1,11 @@
 #!/bin/bash
-#  Usage: ssh-authorize [user@]hostname
-#  
-#  Create and place DSA public key on a remote ssh server.  Establishes 
-#  an automatic public key private key authentication.    
-
-#  Your default DSA key will be created and(or) used.  Keep the default name:
-#  $HOME/.ssh/id_dsa.pub
+## Usage: ssh-authorize [user@]hostname
+## 
+## Create and place DSA public key on a remote ssh server.  Establishes 
+## an automatic public key private key authentication.    
+## 
+## Your default DSA key will be created and(or) used.  Keep the default name:
+## $HOME/.ssh/id_dsa.pub
 
 if test "$1" == "help" || ! test  "$#" -eq 1
 then

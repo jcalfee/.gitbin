@@ -1,0 +1,149 @@
+#!/bin/bash
+## This script and it's usage is still changing
+## 
+## Calculates a path relative to the home directory.  That path is used to Sync 
+## folders with a remote host.  
+## 
+## Home directories may differ, but the path relative to the home directory 
+## is the same.  Under this configuration, it becomes simple to create and
+## use the sync commands based on the current working directory.  
+## 
+## Unless you force it, this script will always preview and prompt before 
+## actually making changes.
+## 
+## Example:
+##   /home/doej/projects/examples$ rscp my_server1 (get|put)
+## OR
+##   /home/doej/projects/examples$ rscp my_server1 (get|put) [path/]file
+## 
+## Sync ~/projects/examples from my_server1 account with 
+## current directory (also ~/projects/examples).  
+## 
+## my_server1 can be some short made-up alias; interactivly prompt and record 
+## the host and user.
+## 
+## get - sync from server to local directory
+## put - sync from local directory to server
+## 
+## -f, force  - skip the the dry-run and 'are you sure'
+## -e, echo   - just echo the command and exit
+## -d, delete - delete extraneous files from dest dir
+## 
+## Suffix commands to the main command: get-f, get-e, get-fed
+## 
+
+alias=$1
+cmd=$2
+path=$3
+
+if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put") 
+then
+   # Show usage above
+   sh $(dirname $0)/prj-usage $0
+   exit 1 #1=error
+fi
+
+IFS='-' read -ra ARRAY <<< "$cmd"
+cmd=${ARRAY[0]} # get-fc becomes just "get"
+parms=${ARRAY[1]}
+echo $parms | grep "f" > /dev/null && force=
+echo $parms | grep "e" > /dev/null && echo=
+echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
+
+#############
+#Environment
+#
+. prj-env $alias,user,host
+user_host=$user${user:+@}$host
+
+if [[ $path == /* ]]
+then
+  # User is providing a more specific path and does not
+  # want to the relative home dir path.  
+  specific_path=
+else
+  #Example: /home/jcalfee/bin becomes ~/bin
+  rsync_path=`pwd|sed "s?$HOME?~?g"`
+fi
+
+
+test -f .rsync_includes && 
+  rsync_parms="$rsync_parms --include-from=.rsync_includes"
+  
+test -f .rsync_excludes && 
+  rsync_parms="$rsync_parms --exclude-from=.rsync_excludes"
+  
+test -f .rsync_filters && 
+  rsync_parms="$rsync_parms --filter='merge .rsync_filters'"
+
+#############
+function rsync_run {
+  rsync_cmd=$1
+  if test -n "${echo+x}"
+  then
+    if test -n "${force+x}"
+    then
+      echo rsync $rsync_cmd 
+    else
+      echo rsync $rsync_cmd --dry-run
+    fi
+    return
+  fi
+  tmp=`mktemp /tmp/rsync.XXXXXXXX`
+  trap 'rm $tmp' EXIT
+  
+  if test -n "${force+x}"
+  then
+    echo rsync $rsync_cmd > $tmp
+    sh $tmp
+  else
+    echo rsync $rsync_cmd --dry-run | tee $tmp
+    sh $tmp
+    read -p "Proceed (y/n)? " yn
+    case $yn in
+      [Yy] )
+        echo rsync $rsync_cmd > $tmp
+        sh $tmp
+        ;;
+      [Nn] ) return 1;;
+      * ) echo "Please answer y or n.";;
+    esac
+  fi
+}
+
+#########
+# Main
+#
+case "$cmd" in
+get*) 
+  echo DOWNLOAD...
+  if test -z ${specific_path+x}
+  then
+    rsync_run "$rsync_parms --compress -e ssh -va \"$user_host${user_host:+:}$rsync_path/$path\" \"${path:-.}\""
+  else
+    rsync_run "$rsync_parms --compress -e ssh -va \"$user_host${user_host:+:}$path\" ."
+  fi
+;;
+put*)
+  if test -n "${echo+x}"
+  then
+     echo ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+  else
+     # Do not mkdir if a specific path was provided
+     if test -n ${specific_path+x}
+     then
+       ${host:+ssh $user_host} mkdir -vp "$rsync_path"
+     fi 
+  fi
+  echo UPLOAD...
+  if test -z ${specific_path+x}
+  then
+    rsync_run "$rsync_parms --compress -e ssh -va \"${path:-.}\" \"$user_host${user_host:+:}$rsync_path/$path\""
+  else
+    rsync_run "$rsync_parms --compress -e ssh -va . \"$user_host${user_host:+:}$path\""
+  fi
+;;
+
+esac
+
+

@@ -1,6 +1,6 @@
 #!/bin/bash
-#Example:
-# pathmunge bin # Adds bin to your PATH variable unless it is already there
+## Example:
+##  pathmunge bin # Adds bin to your PATH variable unless it is already there
 
 if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
    if [ "$2" = "after" ] ; then
