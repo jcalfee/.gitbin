@@ -1,0 +1,9 @@
+#!/bin/bash
+vm=${1:-WinXP}
+cat <<- EOf
+# No GUI
+vboxmanage startvm $vm --type headless
+vboxmanage controlvm $vm acpipowerbutton
+
+EOf
+
