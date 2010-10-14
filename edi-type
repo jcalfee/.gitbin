@@ -1,0 +1,11 @@
+for i in $*
+do
+  . $(dirname $0)/edi-isa $i
+  awk --assign FS="${field_separator}" --assign RS="${awk_record_separator}" \
+'
+  /^ST/ {
+    print FILENAME " #" $2
+    exit
+  }
+' $i
+done

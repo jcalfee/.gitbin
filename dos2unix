@@ -1,0 +1,6 @@
+## Strip off extra DOS new line character and
+## set the 'execute' bit for user and group.
+
+cat $1 | tr -d '\r' > $1.tmp
+mv $1.tmp $1
+chmod ug+x $1
