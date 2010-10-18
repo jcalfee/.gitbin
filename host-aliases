@@ -1,0 +1,4 @@
+pushd ~/.prj-env
+egrep host *
+popd
+
