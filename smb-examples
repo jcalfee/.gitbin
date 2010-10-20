@@ -1,11 +1,11 @@
 #!/bin/bash
 ## Samba Examples
-cat <<- EOf
+cat <<- EOT
 # change 2 settings in smb.conf:
 #  workgroup=myworkgroup
 #  security=domain (instead of user)
 
 sudo net join -w windows_domain -S windows_domain_server -U windows_admin_user
 
-EOf
+EOT
 
