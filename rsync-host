@@ -53,7 +53,7 @@ echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
 #############
 #Environment
 #
-. prj-env $alias,user,host
+. $(dirname $0)/prj-env $alias,user,host
 user_host=$user${user:+@}$host
 
 if [[ $path == /* ]]

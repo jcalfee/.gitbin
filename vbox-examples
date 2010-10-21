@@ -1,10 +1,10 @@
 #!/bin/bash
 vm=${1:-WinXP}
-cat <<- EOf
+cat <<- EOT
 # No GUI
 vboxmanage startvm $vm --type headless
+# Shutdown 
 vboxmanage controlvm $vm acpipowerbutton
-
 
 ## XP re-activation paramters
 # http://forums.virtualbox.org/viewtopic.php?t=9697#37931
@@ -24,9 +24,9 @@ VSETED="VBoxManage setextradata WinXP"
 \$VSETED \$CFG_PATH/DmiSystemVendor     "Dell Inc."
 \$VSETED \$CFG_PATH/DmiSystemProduct    "Precision WorkStation 380"
 \$VSETED \$CFG_PATH/DmiSystemVersion    "<EMPTY>"
-\$VSETED \$CFG_PATH/DmiSystemSerial     "J5NXG91"
+\$VSETED \$CFG_PATH/DmiSystemSerial     "JJTESTM"
 \$VSETED \$CFG_PATH/DmiSystemUuid       "44454C4C-3500-104E-8058-CAC04F473931"
 \$VSETED \$CFG_PATH/DmiSystemFamily     "Pentium 4"
 
-EOf
+EOT
 
