@@ -19,7 +19,10 @@
 ##    
 
 IFS=',' read -ra ARRAY <<< "$1"
-if test $# -ne 1 || test ${#ARRAY[*]} -lt 2 || test -z ${ARRAY[0]}
+if test $# -ne 1 || 
+  test ${#ARRAY[*]} -lt 2 || 
+  test -z ${ARRAY[0]} ||
+  echo ${ARRAY[0]} | egrep "^-"
 then
   sh $(dirname $0)/prj-usage $0
   host-aliases
