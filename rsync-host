@@ -30,11 +30,15 @@
 ## -d, delete - delete extraneous files from dest dir
 ## 
 ## Suffix commands to the main command: get-f, get-e, get-fed
-## 
 
+#############
+#Environment
+#
 alias=$1
 cmd=$2
 path=$3
+. $(dirname $0)/prj-env $alias,user,host
+user_host=$user${user:+@}$host
 
 if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put") 
 then
@@ -49,12 +53,6 @@ parms=${ARRAY[1]}
 echo $parms | grep "f" > /dev/null && force=
 echo $parms | grep "e" > /dev/null && echo=
 echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
-
-#############
-#Environment
-#
-. $(dirname $0)/prj-env $alias,user,host
-user_host=$user${user:+@}$host
 
 if [[ $path == /* ]]
 then
