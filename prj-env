@@ -22,6 +22,7 @@ IFS=',' read -ra ARRAY <<< "$1"
 if test $# -ne 1 || test ${#ARRAY[*]} -lt 2 || test -z ${ARRAY[0]}
 then
   sh $(dirname $0)/prj-usage $0
+  host-aliases
   exit 1
 fi
 

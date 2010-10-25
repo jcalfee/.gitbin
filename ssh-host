@@ -2,9 +2,9 @@
 ## Wrapps the SSH command adding support for alias host names.
 ## 
 ## Example:
-##   ssh-host my_server1 [ssh arguments]
+##   ssh-host host_alias [ssh arguments]
 ## 
-## my_server1 is a short made-up alias.  The first time, this command 
+## host_alias is a short made-up alias.  The first time, this command 
 ## interactivly prompts for the host and user values and saves them for the 
 ## next runs.  Pay attention to the file name, you can edit that file.
 ## 
