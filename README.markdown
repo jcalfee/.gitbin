@@ -14,6 +14,8 @@ Depends: edi-isa (in same directory as this script)
 Strip off extra DOS new line character and
 set the 'execute' bit for user and group.
 
+Note: some systems have this command already
+
 
 ./ssh-host
 ------------
@@ -28,11 +30,20 @@ next runs.  Pay attention to the file name, you can edit that file.
 
 Examples:
  
- SSH to to a remote host: ssh-host db
- List a remote directory: ssh-host db ls
- List a remote directory: echo ls |ssh-host db
-    Testing return value: echo ls . | ssh-host db && pwd
-    Testing return value: echo ls nowhere | ssh-host db && pwd
+* SSH to to a remote host:
+    ssh-host db
+
+* List a remote directory: 
+    ssh-host db ls
+
+* List a remote directory: 
+    echo ls |ssh-host db
+
+* Testing return value: 
+    echo ls . | ssh-host db && pwd
+
+* Testing return value: 
+    echo ls nowhere | ssh-host db && pwd
 
 
 
@@ -110,7 +121,6 @@ to sync this directory with the repository.
 
 ./rsync-host
 ------------
-This script and it's usage is still changing
 
 Calculates a path relative to the home directory.  That path is used to Sync 
 folders with a remote host.  
@@ -123,9 +133,9 @@ Unless you force it, this script will always preview and prompt before
 actually making changes.
 
 Example:
-  /home/doej/projects/examples$ rscp host_alias (get|put)
+    /home/doej/projects/examples$ rscp host_alias (get|put)
 OR
-  /home/doej/projects/examples$ rscp host_alias (get|put) [path/]file
+    /home/doej/projects/examples$ rscp host_alias (get|put) [path/]file
 
 Sync ~/projects/examples from host_alias account with 
 current directory (also ~/projects/examples).  
