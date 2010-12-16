@@ -1,9 +1,11 @@
 #!/bin/bash
 ## Usage:
-##  . prj-env alias,var1,etc...
+## 
+##     . prj-env alias,var1,etc...
 ## 
 ## Example:
-##  . prj-env my,user,host
+## 
+##     . prj-env my,user,host
 ## 
 ## Creates ~/.prj-env/my script.  The my script sets
 ## the variables (var1,etc...).  Intially, this script will
@@ -11,8 +13,8 @@
 ## environment.  If all values are already available, this 
 ## script runs silently.
 ## 
-##  export user=john
-##  export host=johnDoe314.example.com
+##     export user=john
+##     export host=johnDoe314.example.com
 ## 
 ## Alias is a short word used to retrieve envirnonment.
 ## Prompts user then saves response in ~/.prj-env/my

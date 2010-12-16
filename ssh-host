@@ -2,7 +2,8 @@
 ## Wrapps the SSH command adding support for alias host names.
 ## 
 ## Example:
-##   ssh-host host_alias [ssh arguments]
+## 
+##     ssh-host host_alias [ssh arguments]
 ## 
 ## host_alias is a short made-up alias.  The first time, this command 
 ## interactivly prompts for the host and user values and saves them for the 
@@ -20,7 +21,7 @@
 ## 
 ## * List a remote directory: 
 ## 
-##     echo ls |ssh-host db
+##     echo ls | ssh-host db
 ## 
 ## * Testing return value: 
 ## 

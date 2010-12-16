@@ -9,7 +9,6 @@
 
 ## hg clone http://bitbucket.org/obensonne/gnome-encfs
 ## hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
-## =============================================================================
 ##
 ##    gnome-encfs - GNOME keyring and auto-mount integration of EncFS folders.
 ##    Copyright (C) 2010 Oben Sonne <obensonne@googlemail.com>
@@ -27,8 +26,7 @@
 ##    You should have received a copy of the GNU General Public License
 ##    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##
-## =============================================================================
-
+## 
 
 import getpass
 import os

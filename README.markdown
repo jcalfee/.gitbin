@@ -11,10 +11,11 @@ Depends: edi-isa (in same directory as this script)
 
 ./dos2unix
 ------------
-Strip off extra DOS new line character and
-set the 'execute' bit for user and group.
+Strip off extra DOS carrage return characters.  The extra
+return characters, when in shell scripts, can cause strange 
+errors.
 
-Note: some systems have this command already
+Some systems have this command already
 
 
 ./ssh-host
@@ -22,7 +23,8 @@ Note: some systems have this command already
 Wrapps the SSH command adding support for alias host names.
 
 Example:
-  ssh-host host_alias [ssh arguments]
+
+    ssh-host host_alias [ssh arguments]
 
 host_alias is a short made-up alias.  The first time, this command 
 interactivly prompts for the host and user values and saves them for the 
@@ -40,7 +42,7 @@ Examples:
 
 * List a remote directory: 
 
-    echo ls |ssh-host db
+    echo ls | ssh-host db
 
 * Testing return value: 
 
@@ -65,11 +67,14 @@ INSTALL
 Debian/Ubuntu: sudo apt-get install openswan
 
 USAGE:
-  ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
-  ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
+
+    ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
+    ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
    
 Overwrite using variables:
-  home=@home connection_name=work ike=... ipsec-sonic-config ....
+
+    home=@home connection_name=work ike=... ipsec-sonic-config ....
+
 
 
 ./edi-isa
@@ -115,7 +120,12 @@ Example:
 
 ./vbox-examples
 ------------
-XP re-activation paramters
+Set XP activation paramters
+http://forums.virtualbox.org/viewtopic.php?t=9697#37931
+Probe the machine where your license is activated:
+
+    sudo dmidecode | less
+
 
 
 ./svn-sync
@@ -162,7 +172,6 @@ Suffix commands to the main command: get-f, get-e, get-fed
 ------------
 hg clone http://bitbucket.org/obensonne/gnome-encfs
 hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
-=============================================================================
    gnome-encfs - GNOME keyring and auto-mount integration of EncFS folders.
    Copyright (C) 2010 Oben Sonne <obensonne@googlemail.com>
    This program is free software: you can redistribute it and/or modify
@@ -175,16 +184,18 @@ hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
    GNU General Public License for more details.
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-=============================================================================
+
 
 
 ./prj-env
 ------------
 Usage:
- . prj-env alias,var1,etc...
+
+    . prj-env alias,var1,etc...
 
 Example:
- . prj-env my,user,host
+
+    . prj-env my,user,host
 
 Creates ~/.prj-env/my script.  The my script sets
 the variables (var1,etc...).  Intially, this script will
@@ -192,22 +203,17 @@ prompt for variables that are not already found in the my
 environment.  If all values are already available, this 
 script runs silently.
 
- export user=john
- export host=johnDoe314.example.com
+    export user=john
+    export host=johnDoe314.example.com
 
 Alias is a short word used to retrieve envirnonment.
 Prompts user then saves response in ~/.prj-env/my
    
 
 
-./prj-helper
-------------
-Deprecated, moved to separage scripts
-
-
 ./vbox-module-load-fix
 ------------
-If Ubuntu vbox bridged networking modules are needed and do not load
+If Ubuntu vbox bridged networking modules are needed and do not load,
 try this alternative method using insmod.
 
 
