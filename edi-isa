@@ -1,12 +1,14 @@
+## 
+## Sets environment variables by analyzing the ISA header
+## 
+## Usage: $0 EDI_FILE_NAME
+## 
 if test $# -lt 1
 then
-  echo "
-  Sets environment by analyzing the ISA header
-
-  Usage: $0 EDI_FILE_NAME
-"
+  egrep "^## " $0 | sed -e 's/^## /  /g'
   exit 1
 fi
+
 isa=`head --bytes=106 $1`
 export field_separator="${isa:3:1}"
 export record_separator="${isa:105:1}"

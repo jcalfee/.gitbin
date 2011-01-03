@@ -5,11 +5,14 @@
 ## Debian/Ubuntu: sudo apt-get install openswan
 ## 
 ## USAGE:
-##   ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
-##   ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
+## 
+##     ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
+##     ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
 ##    
 ## Overwrite using variables:
-##   home=@home connection_name=work ike=... ipsec-sonic-config ....
+## 
+##     home=@home connection_name=work ike=... ipsec-sonic-config ....
+## 
 
 esp=${esp:-3DES-SHA1}
 ike=${ike:-3DES-SHA1-modp1024}

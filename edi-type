@@ -1,3 +1,15 @@
+## 
+## Show the type of each EDI message provided on the command-line.
+## Example: 810, 855, 850, 997, etc....
+## 
+## Depends: edi-isa (in same directory as this script)
+## 
+if test $# -lt 1
+then
+  egrep "^## " $0 | sed -e 's/^## /  /g'
+  exit 1
+fi
+
 for i in $*
 do
   . $(dirname $0)/edi-isa $i

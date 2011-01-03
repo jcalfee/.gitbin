@@ -1,5 +1,4 @@
 #!/bin/bash
-## This script and it's usage is still changing
 ## 
 ## Calculates a path relative to the home directory.  That path is used to Sync 
 ## folders with a remote host.  
@@ -12,14 +11,14 @@
 ## actually making changes.
 ## 
 ## Example:
-##   /home/doej/projects/examples$ rscp my_server1 (get|put)
+##     /home/doej/projects/examples$ rscp host_alias (get|put)
 ## OR
-##   /home/doej/projects/examples$ rscp my_server1 (get|put) [path/]file
+##     /home/doej/projects/examples$ rscp host_alias (get|put) [path/]file
 ## 
-## Sync ~/projects/examples from my_server1 account with 
+## Sync ~/projects/examples from host_alias account with 
 ## current directory (also ~/projects/examples).  
 ## 
-## my_server1 can be some short made-up alias; interactivly prompt and record 
+## host_alias can be some short made-up alias; interactivly prompt and record 
 ## the host and user.
 ## 
 ## get - sync from server to local directory
@@ -30,11 +29,15 @@
 ## -d, delete - delete extraneous files from dest dir
 ## 
 ## Suffix commands to the main command: get-f, get-e, get-fed
-## 
 
+#############
+#Environment
+#
 alias=$1
 cmd=$2
 path=$3
+. $(dirname $0)/prj-env $alias,user,host
+user_host=$user${user:+@}$host
 
 if test $# -lt 2 || test ! $(echo $cmd | egrep "get|put") 
 then
@@ -49,12 +52,6 @@ parms=${ARRAY[1]}
 echo $parms | grep "f" > /dev/null && force=
 echo $parms | grep "e" > /dev/null && echo=
 echo $parms | grep "d" > /dev/null && rsync_parms="$rsync_parms --delete"
-
-#############
-#Environment
-#
-. $(dirname $0)/prj-env $alias,user,host
-user_host=$user${user:+@}$host
 
 if [[ $path == /* ]]
 then
