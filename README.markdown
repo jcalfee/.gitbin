@@ -112,6 +112,11 @@ Example:
  pathmunge bin # Adds bin to your PATH variable unless it is already there
 
 
+./readme.sh
+------------
+Usage: ./readme.sh > README.markdown
+
+
 ./vbox-examples
 ------------
 Set XP activation paramters
