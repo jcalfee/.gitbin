@@ -23,7 +23,6 @@ Some systems have this command already
 Wrapps the SSH command adding support for alias host names.
 
 Example:
-
     ssh-host host_alias [ssh arguments]
 
 host_alias is a short made-up alias.  The first time, this command 
@@ -33,23 +32,18 @@ next runs.  Pay attention to the file name, you can edit that file.
 Examples:
  
 * SSH to to a remote host:
-
     ssh-host db
 
 * List a remote directory: 
-
     ssh-host db ls
 
 * List a remote directory: 
-
     echo ls | ssh-host db
 
 * Testing return value: 
-
     echo ls . | ssh-host db && pwd
 
 * Testing return value: 
-
     echo ls nowhere | ssh-host db && pwd
 
 
