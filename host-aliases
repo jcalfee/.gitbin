@@ -1,7 +1,7 @@
 pushd ~/.prj-env > /dev/null
 echo '~/.prj-env'
 egrep host * && echo "
-Legend for the Project Environment above:
+Legend:
   host_alias:export host=full.hostname.com
 "
 popd > /dev/null

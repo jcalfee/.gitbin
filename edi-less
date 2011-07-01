@@ -1,3 +1,16 @@
+## 
+## Display (or less) one or more EDI files provided on the
+## command-line.  Each record separator is replaced by a 
+## new line; this makes the message easy to read.
+## 
+## Depends: edi-isa (in same directory as this script)
+## 
+if test $# -lt 1
+then
+  egrep "^## " $0 | sed -e 's/^## /  /g'
+  exit 1
+fi
+
 for i in $*
 do
   . $(dirname $0)/edi-isa $i

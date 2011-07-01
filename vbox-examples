@@ -6,10 +6,12 @@ vboxmanage startvm $vm --type headless
 # Shutdown 
 vboxmanage controlvm $vm acpipowerbutton
 
-## XP re-activation paramters
-# http://forums.virtualbox.org/viewtopic.php?t=9697#37931
-# Probe the machine where your license is activated:
-# sudo dmidecode | less
+## Set XP activation paramters
+## http://forums.virtualbox.org/viewtopic.php?t=9697#37931
+## Probe the machine where your license is activated:
+## 
+##     sudo dmidecode | less
+## 
 # Set the following paramters accordingly:
 CFG_PATH="VBoxInternal/Devices/pcbios/0/Config"
 VSETED="VBoxManage setextradata WinXP"
