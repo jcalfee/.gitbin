@@ -12,7 +12,7 @@ vboxmanage controlvm $vm acpipowerbutton
 ## 
 ##     sudo dmidecode | less
 ## 
-# Set the following parameters accordingly:
+# Set the following paramters accordingly:
 CFG_PATH="VBoxInternal/Devices/pcbios/0/Config"
 VSETED="VBoxManage setextradata WinXP"
 
