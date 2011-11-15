@@ -10,6 +10,11 @@ then
 fi
 
 isa=`head --bytes=106 $1`
+
+##sed 's/ *$//' removes all spaces from the end of the line
+#export x12_receiver_qual="`echo ${isa:32:2} | sed 's/ *$//'`"
+#export x12_receiver="`echo ${isa:35:15} | sed 's/ *$//'`"
+
 export field_separator="${isa:3:1}"
 export record_separator="${isa:105:1}"
 export awk_record_separator
