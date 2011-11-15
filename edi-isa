@@ -20,6 +20,6 @@ then
   awk_record_separator="\\$record_separator"
   record_separator="\\$record_separator"
 else
-  # If not, use a fancy separator supporting optional new lines
+  # If not, use a separator supporting optional new lines
   awk_record_separator="[${record_separator}\r\n]+"
 fi
