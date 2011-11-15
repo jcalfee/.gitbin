@@ -119,7 +119,7 @@ Usage: ./readme.sh > README.markdown
 
 ./vbox-examples
 ------------
-Set XP activation paramters
+Set XP activation parameters
 http://forums.virtualbox.org/viewtopic.php?t=9697#37931
 Probe the machine where your license is activated:
 
