@@ -1,0 +1,2 @@
+mkdir ~/Encrypted ~/.encfs/Encrypted -p
+gnome-encfs --add ~/.encfs/Encrypted ~/Encrypted
