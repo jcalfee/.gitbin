@@ -53,6 +53,17 @@ Examples:
 Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
 
 
+./notify
+------------
+Run a script and notify based on conditions: 
+ on_output,on_error (one or both)
+
+Notification is sent using 'mail' to the email address
+provided.  Standard output and standard error are 
+captured together and emailed in the body of the email.
+
+
+
 ./ipsec-sonic-config
 ------------
 TODO: document configuration on the Sonicwall
