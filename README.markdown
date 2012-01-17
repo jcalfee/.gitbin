@@ -144,6 +144,20 @@ Generate a preview and offer to execute any svn commands needed
 to sync this directory with the repository.
 
 
+./clean-file
+------------
+Filter non-printable characters.  
+
+Use -i to edit file in-place (see man sed)
+
+Example: clean-file -i myfile.csv
+     or: cat bad.csv | clean-file > good.csv
+
+Redundant new lines characters removed (like dos2unix)
+
+All parameters are passed to the sed command
+
+
 ./rsync-host
 ------------
 
