@@ -1,5 +1,4 @@
 #!/bin/bash
-
 ## Run a script and notify based on conditions: 
 ##  on_output,on_error (one or both)
 ## 
@@ -18,18 +17,18 @@ cmd=${4?Parameter 4.. commands to execute and watch}
 
 tmp=$(mktemp /tmp/notify.XXXXXX)
 trap "
-  rm -v $tmp
+  rm -v $tmp*
   set +o xtrace
 " EXIT
 
-date > $tmp
+date > $tmp.start
 
 # >(Process substitution) must be used in place of pipe so $cmd will run
 # in this shell giving access to the return code $?.
 $cmd > >(tee $tmp) 2>&1 
 return_value=$?
 
-date >> $tmp
+date >> $tmp.end
 
 if 
   [ ! $options ] ||
@@ -38,5 +37,5 @@ if
   # on output required a sleep before test -s would work
   ([[ $options == *on_output* ]] && sleep .2 && test -s $tmp)
 then
-  cat $tmp | mail -s "($return_value) $subject" $email
+  cat $tmp.start $tmp $tmp.end | mail -s "($return_value) $subject" $email
 fi
