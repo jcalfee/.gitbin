@@ -62,6 +62,9 @@ Notification is sent using 'mail' to the email address
 provided.  Standard output and standard error are 
 captured together and emailed in the body of the email.
 
+Depends On
+> sudo aptitude install mailutils
+
 
 
 ./ipsec-sonic-config
