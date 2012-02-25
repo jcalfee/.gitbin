@@ -1,3 +1,4 @@
+## Usage: ./readme.sh > README.markdown
 files=$(find . -maxdepth 1 -type f -perm /u+x)
 for file in $files
 do

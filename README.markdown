@@ -23,7 +23,6 @@ Some systems have this command already
 Wrapps the SSH command adding support for alias host names.
 
 Example:
-
     ssh-host host_alias [ssh arguments]
 
 host_alias is a short made-up alias.  The first time, this command 
@@ -33,23 +32,18 @@ next runs.  Pay attention to the file name, you can edit that file.
 Examples:
  
 * SSH to to a remote host:
-
     ssh-host db
 
 * List a remote directory: 
-
     ssh-host db ls
 
 * List a remote directory: 
-
     echo ls | ssh-host db
 
 * Testing return value: 
-
     echo ls . | ssh-host db && pwd
 
 * Testing return value: 
-
     echo ls nowhere | ssh-host db && pwd
 
 
@@ -57,6 +51,20 @@ Examples:
 ./ssh-keygen-default
 ------------
 Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
+
+
+./notify
+------------
+Run a script and notify based on conditions: 
+ on_output,on_error (one or both)
+
+Notification is sent using 'mail' to the email address
+provided.  Standard output and standard error are 
+captured together and emailed in the body of the email.
+
+Depends On
+> sudo aptitude install mailutils
+
 
 
 ./ipsec-sonic-config
@@ -118,9 +126,14 @@ Example:
  pathmunge bin # Adds bin to your PATH variable unless it is already there
 
 
+./readme.sh
+------------
+Usage: ./readme.sh > README.markdown
+
+
 ./vbox-examples
 ------------
-Set XP activation paramters
+Set XP activation parameters
 http://forums.virtualbox.org/viewtopic.php?t=9697#37931
 Probe the machine where your license is activated:
 
@@ -132,6 +145,20 @@ Probe the machine where your license is activated:
 ------------
 Generate a preview and offer to execute any svn commands needed
 to sync this directory with the repository.
+
+
+./clean-file
+------------
+Filter non-printable characters.  
+
+Use -i to edit file in-place (see man sed)
+
+Example: clean-file -i myfile.csv
+     or: cat bad.csv | clean-file > good.csv
+
+Redundant new lines characters removed (like dos2unix)
+
+All parameters are passed to the sed command
 
 
 ./rsync-host

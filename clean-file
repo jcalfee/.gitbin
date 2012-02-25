@@ -1,0 +1,13 @@
+## Filter non-printable characters.  
+## 
+## Use -i to edit file in-place (see man sed)
+## 
+## Example: clean-file -i myfile.csv
+##      or: cat bad.csv | clean-file > good.csv
+## 
+## Redundant new lines characters removed (like dos2unix)
+## 
+
+## All parameters are passed to the sed command
+sed 's/[^[:print:]]//' $*
+

@@ -14,5 +14,5 @@ fi
 for i in $*
 do
   . $(dirname $0)/edi-isa $i
-  cat $i|sed "y/${record_separator}/\n/" | less
+  cat $i|sed "s/${record_separator}/${record_separator}\n/g" | less
 done
