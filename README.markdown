@@ -191,11 +191,6 @@ put - sync from local directory to server
 Suffix commands to the main command: get-f, get-e, get-fed
 
 
-./topc
-------------
-Run any command and refresh it every second (like top)
-
-
 ./gnome-encfs
 ------------
 hg clone http://bitbucket.org/obensonne/gnome-encfs
