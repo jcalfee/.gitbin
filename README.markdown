@@ -9,15 +9,6 @@ Depends: edi-isa (in same directory as this script)
 
 
 
-./dos2unix
-------------
-Strip off extra DOS carrage return characters.  The extra
-return characters, when in shell scripts, can cause strange 
-errors.
-
-Some systems have this command already
-
-
 ./ssh-host
 ------------
 Wrapps the SSH command adding support for alias host names.
@@ -109,6 +100,11 @@ Depends: edi-isa (in same directory as this script)
 Samba Examples
 
 
+./mouse-2-ptr.sh
+------------
+Instructions to give second mouse its own pointer
+
+
 ./edi-cat
 ------------
 
@@ -193,6 +189,11 @@ put - sync from local directory to server
 -d, delete - delete extraneous files from dest dir
 
 Suffix commands to the main command: get-f, get-e, get-fed
+
+
+./topc
+------------
+Run any command and refresh it every second (like top)
 
 
 ./gnome-encfs
