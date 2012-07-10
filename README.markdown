@@ -1,3 +1,19 @@
+./errout
+------------
+Prefix standard error lines and standard out lines with some string.
+
+Usage: errout ./some-script "any parameters"
+
+By default, prefixes standard error lines with ! and does not prefix 
+standard out lines by anything.  Set the 'error_prefix' or 
+'out_prefix' variables to customize.
+
+This is a first layer of simple formatting.  More advanced formatting
+logic (xterm color codes or HTML) may intercept and reformat this 
+output.
+
+
+
 ./edi-less
 ------------
 
@@ -74,6 +90,12 @@ Overwrite using variables:
 
     home=@home connection_name=work ike=... ipsec-sonic-config ....
 
+
+
+./errexit
+------------
+Enables bash's errexit mode
+Usage: errout ./some-script "any parameters"
 
 
 ./edi-isa
@@ -249,5 +271,11 @@ an automatic public key private key authentication.
 
 Your default DSA key will be created and(or) used.  Keep the default name:
 $HOME/.ssh/id_dsa.pub
+
+
+./xtrace
+------------
+Enables bash's xtrace mode.
+Usage: xtrace ./some-script "any parameters"
 
 
