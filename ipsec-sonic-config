@@ -1,6 +1,4 @@
 #!/bin/bash
-## TODO: document configuration on the Sonicwall
-##    
 ## INSTALL
 ## Debian/Ubuntu: sudo apt-get install openswan
 ## 
