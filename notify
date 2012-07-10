@@ -13,7 +13,8 @@
 email=${1?Parameter 1 is notification email}
 subject=${2?Parameter 2 is the email subject}
 options=${3?Parameter 3 Options: on_error,on_output}
-cmd=${4?Parameter 4.. commands (surrounded by quotes) to execute and watch}
+${4?Parameter 4.. commands}
+shift 3
 
 #debugging on
 #set -o xtrace
@@ -28,7 +29,7 @@ date > $tmp.start
 
 # >(Process substitution) must be used in place of pipe so $cmd will run
 # in this shell giving access to the return code $?.
-$cmd > >(tee $tmp) 2>&1 
+"$@" > >(tee $tmp) 2>&1 
 return_value=$?
 
 date >> $tmp.end
