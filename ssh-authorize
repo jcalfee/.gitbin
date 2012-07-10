@@ -7,13 +7,15 @@
 ## Your default DSA key will be created and(or) used.  Keep the default name:
 ## $HOME/.ssh/id_dsa.pub
 
-if test "$1" == "help" || ! test  "$#" -eq 1
+if test "$1" == "help" || test  "$#" -eq 0
 then
   sh $(dirname $0)/prj-usage $0
   exit 1
 fi
 
 user_host=$1
+shift 1
+
 if [[ ! $user_host =~ "@" ]]
 then
   alias=$user_host
@@ -28,5 +30,5 @@ sh $(dirname $0)/ssh-keygen-default
 [ -f $HOME/.ssh/id_dsa.pub ] && \
   # Create .ssh, and only if it was just created, set the permissions
   # Upload the local public key and append it to remote's authorized_keys file
-  ssh $user_host mkdir -p .ssh \&\& chmod 700 .ssh\; echo "`cat $HOME/.ssh/id_dsa.pub` >> .ssh/authorized_keys" &&
+  ssh $user_host $* mkdir -p .ssh \&\& chmod 700 .ssh\; echo "`cat $HOME/.ssh/id_dsa.pub` >> .ssh/authorized_keys && ln -s .ssh/authorized_keys .ssh/authorized_keys2" &&
     echo SSH Link established...

@@ -9,15 +9,6 @@ Depends: edi-isa (in same directory as this script)
 
 
 
-./dos2unix
-------------
-Strip off extra DOS carrage return characters.  The extra
-return characters, when in shell scripts, can cause strange 
-errors.
-
-Some systems have this command already
-
-
 ./ssh-host
 ------------
 Wrapps the SSH command adding support for alias host names.
@@ -107,6 +98,11 @@ Depends: edi-isa (in same directory as this script)
 ./smb-examples
 ------------
 Samba Examples
+
+
+./mouse-2-ptr.sh
+------------
+Instructions to give second mouse its own pointer
 
 
 ./edi-cat
