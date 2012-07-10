@@ -1,3 +1,8 @@
+./smb-examples
+------------
+Samba Examples
+
+
 ./edi-less
 ------------
 
@@ -7,6 +12,90 @@ new line; this makes the message easy to read.
 
 Depends: edi-isa (in same directory as this script)
 
+
+
+./ssh-authorize
+------------
+Usage: ssh-authorize [user@]hostname
+
+Create and place DSA public key on a remote ssh server.  Establishes 
+an automatic public key private key authentication.    
+
+Your default DSA key will be created and(or) used.  Keep the default name:
+$HOME/.ssh/id_dsa.pub
+
+
+./svn-sync
+------------
+Generate a preview and offer to execute any svn commands needed
+to sync this directory with the repository.
+
+
+./vbox-examples
+------------
+Set XP activation parameters
+http://forums.virtualbox.org/viewtopic.php?t=9697#37931
+Probe the machine where your license is activated:
+
+    sudo dmidecode | less
+
+
+
+./readme.sh
+------------
+Usage: ./readme.sh > README.markdown
+
+
+./mouse-2-ptr.sh
+------------
+Instructions to give second mouse its own pointer
+
+
+./edi-cat
+------------
+
+Display (or cat) one or more EDI files provided on the
+command-line.  Each record separator is replaced by a
+new line; this makes the message easy to read.
+
+Depends: edi-isa (in same directory as this script)
+
+
+
+./vbox-module-load-fix
+------------
+If Ubuntu vbox bridged networking modules are needed and do not load,
+try this alternative method using insmod.
+
+
+./edi-type
+------------
+
+Show the type of each EDI message provided on the command-line.
+Example: 810, 855, 850, 997, etc....
+
+Depends: edi-isa (in same directory as this script)
+
+
+
+./notify
+------------
+Run a script and notify based on conditions: 
+ on_output,on_error (one or both)
+
+Notification is sent using 'mail' to the email address
+provided.  Standard output and standard error are 
+captured together and emailed in the body of the email.
+
+Depends On
+> sudo aptitude install mailutils
+
+
+
+./pathmunge
+------------
+Example:
+ pathmunge bin # Adds bin to your PATH variable unless it is already there
 
 
 ./ssh-host
@@ -37,124 +126,6 @@ Examples:
 * Testing return value: 
     echo ls nowhere | ssh-host db && pwd
 
-
-
-./ssh-keygen-default
-------------
-Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
-
-
-./notify
-------------
-Run a script and notify based on conditions: 
- on_output,on_error (one or both)
-
-Notification is sent using 'mail' to the email address
-provided.  Standard output and standard error are 
-captured together and emailed in the body of the email.
-
-Depends On
-> sudo aptitude install mailutils
-
-
-
-./ipsec-sonic-config
-------------
-TODO: document configuration on the Sonicwall
-   
-INSTALL
-Debian/Ubuntu: sudo apt-get install openswan
-
-USAGE:
-
-    ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
-    ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
-   
-Overwrite using variables:
-
-    home=@home connection_name=work ike=... ipsec-sonic-config ....
-
-
-
-./edi-isa
-------------
-
-Sets environment variables by analyzing the ISA header
-
-Usage: $0 EDI_FILE_NAME
-
-
-
-./edi-type
-------------
-
-Show the type of each EDI message provided on the command-line.
-Example: 810, 855, 850, 997, etc....
-
-Depends: edi-isa (in same directory as this script)
-
-
-
-./smb-examples
-------------
-Samba Examples
-
-
-./mouse-2-ptr.sh
-------------
-Instructions to give second mouse its own pointer
-
-
-./edi-cat
-------------
-
-Display (or cat) one or more EDI files provided on the
-command-line.  Each record separator is replaced by a
-new line; this makes the message easy to read.
-
-Depends: edi-isa (in same directory as this script)
-
-
-
-./pathmunge
-------------
-Example:
- pathmunge bin # Adds bin to your PATH variable unless it is already there
-
-
-./readme.sh
-------------
-Usage: ./readme.sh > README.markdown
-
-
-./vbox-examples
-------------
-Set XP activation parameters
-http://forums.virtualbox.org/viewtopic.php?t=9697#37931
-Probe the machine where your license is activated:
-
-    sudo dmidecode | less
-
-
-
-./svn-sync
-------------
-Generate a preview and offer to execute any svn commands needed
-to sync this directory with the repository.
-
-
-./clean-file
-------------
-Filter non-printable characters.  
-
-Use -i to edit file in-place (see man sed)
-
-Example: clean-file -i myfile.csv
-     or: cat bad.csv | clean-file > good.csv
-
-Redundant new lines characters removed (like dos2unix)
-
-All parameters are passed to the sed command
 
 
 ./rsync-host
@@ -191,6 +162,40 @@ put - sync from local directory to server
 Suffix commands to the main command: get-f, get-e, get-fed
 
 
+./ipsec-sonic-config
+------------
+TODO: document configuration on the Sonicwall
+   
+INSTALL
+Debian/Ubuntu: sudo apt-get install openswan
+
+USAGE:
+
+    ipsec-sonic-config @id           @secret          sonicwall_ip  yr_subnet/mask vpn_subnet/mask 
+    ipsec-sonic-config @0017A44CEE33 6FE2A2A2EF722A22 69.69.250.100 192.168.1.0/24 192.168.0.1/24
+   
+Overwrite using variables:
+
+    home=@home connection_name=work ike=... ipsec-sonic-config ....
+
+
+
+./edi-isa
+------------
+
+Sets environment variables by analyzing the ISA header
+
+Usage: $0 EDI_FILE_NAME
+
+
+
+./mp3merge
+------------
+Merge multiple MP3 files into one MP3
+Corrects the headler length so many players show correct scrolling
+Recalc the variable bit rate
+
+
 ./gnome-encfs
 ------------
 hg clone http://bitbucket.org/obensonne/gnome-encfs
@@ -208,6 +213,25 @@ hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+
+
+./ssh-keygen-default
+------------
+Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
+
+
+./clean-file
+------------
+Filter non-printable characters.  
+
+Use -i to edit file in-place (see man sed)
+
+Example: clean-file -i myfile.csv
+     or: cat bad.csv | clean-file > good.csv
+
+Redundant new lines characters removed (like dos2unix)
+
+All parameters are passed to the sed command
 
 
 ./prj-env
@@ -232,22 +256,5 @@ script runs silently.
 Alias is a short word used to retrieve envirnonment.
 Prompts user then saves response in ~/.prj-env/my
    
-
-
-./vbox-module-load-fix
-------------
-If Ubuntu vbox bridged networking modules are needed and do not load,
-try this alternative method using insmod.
-
-
-./ssh-authorize
-------------
-Usage: ssh-authorize [user@]hostname
-
-Create and place DSA public key on a remote ssh server.  Establishes 
-an automatic public key private key authentication.    
-
-Your default DSA key will be created and(or) used.  Keep the default name:
-$HOME/.ssh/id_dsa.pub
 
 

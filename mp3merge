@@ -1,4 +1,4 @@
-## Merge multiple MP3 files into one MP3.
+## Merge multiple MP3 files into one MP3
 if ! test $# -ne 0
 then
   echo "usage: $0 merged.mp3 file1.mp3 file2.mp3 ..."
@@ -35,11 +35,11 @@ mpgtx -j -o $tmp_mp1 "$@"
 #find mp3directory -name "*.mp3" -print0|xargs -0 cat >> merged.mp3
 
 
-## Corrects the headler length so many players have the correct length.
+## Corrects the headler length so many players show correct scrolling
 ffmpeg -i $tmp_mp1 -acodec copy $tmp_mp2
 rm $tmp_mp1
 
-## Recalc the variable bit rate.
+## Recalc the variable bit rate
 # -allways required to avoid an error exit value (non variable bit rate mp3)
 vbrfix -allways -ri1 -ri2 -lameinfo $tmp_mp2 $tmp_mp1
 
