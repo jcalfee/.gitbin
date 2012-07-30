@@ -1,0 +1,7 @@
+## Enables bash's xtrace mode.
+##
+## Usage: xtrace ./some-script "any parameters"
+##
+set -o xtrace
+trap 'set +o xtrace' EXIT
+. "$@"
