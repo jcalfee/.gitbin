@@ -53,6 +53,12 @@ Depends: edi-isa (in same directory as this script)
 
 
 
+./errexit
+------------
+Enables bash's errexit mode
+Usage: errout ./some-script "any parameters"
+
+
 ./errout
 ------------
 Prefix standard error lines and standard out lines with some string.
@@ -273,5 +279,11 @@ Probe the machine where your license is activated:
 ------------
 If Ubuntu vbox bridged networking modules are needed and do not load,
 try this alternative method using insmod.
+
+
+./xtrace
+------------
+Enables bash's xtrace mode.
+Usage: xtrace ./some-script "any parameters"
 
 
