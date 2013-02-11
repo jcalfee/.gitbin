@@ -5,6 +5,12 @@ then
   exit 1
 fi
 
+# Tested with files produced by ripit.  Install lame first for 
+# mp3 support, then ripit will read and encode the tracks from 
+# the CD.  Take caution that the names used by ripit will have 
+# correct alphabetical name sorting.
+# ripit -o `pwd` && eject
+
 # update id3 tags with
 # id3v2
 
