@@ -2,6 +2,8 @@
 ##
 ## Usage: xtrace ./some-script "any parameters"
 ##
+cmd=$1
+shift 1
 set -o xtrace
 trap 'set +o xtrace' EXIT
-. "$@"
+. "$cmd" "$@"
