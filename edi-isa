@@ -9,7 +9,7 @@ then
   exit 1
 fi
 
-isa=`head --bytes=106 $1`
+isa=`head --bytes=106 "$1"`
 
 ##sed 's/ *$//' removes all spaces from the end of the line
 #export x12_receiver_qual="`echo ${isa:32:2} | sed 's/ *$//'`"

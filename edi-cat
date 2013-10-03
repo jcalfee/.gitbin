@@ -11,9 +11,9 @@ then
   exit 1
 fi
 
-for i in $*
+for i in "$@"
 do
-  . $(dirname $0)/edi-isa $i
-  cat $i|sed "s/${record_separator}/${record_separator}\n/g"
+  . $(dirname $0)/edi-isa "$i"
+  cat "$i"|sed "s/${record_separator}/${record_separator}\n/g"
 
 done
