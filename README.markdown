@@ -12,6 +12,15 @@ Redundant new lines characters removed (like dos2unix)
 All parameters are passed to the sed command
 
 
+./cmd_functions.sh
+------------
+Command wrapper functions
+
+Variables:
+cret = the return value of the last command (initialize: export cret)
+cerror = first error code of any command (initialize: export cerror=0)
+
+
 ./edi-cat
 ------------
 

@@ -1,7 +1,10 @@
 #/usr/bin/env bash
 
-## Command wrapper functions.  Prefix a command with one 
-## or more of these functions to aid in logging.
+## Command wrapper functions
+## 
+## Variables:
+## cret = the return value of the last command (initialize: export cret)
+## cerror = first error code of any command (initialize: export cerror=0)
 
 function ctime {
   date
@@ -31,28 +34,12 @@ function clog {
   # >(Process substitution) must be used in place of pipe so $cmd will run
   # in this shell giving access to the return code $?.
   "$@" > >(tee -a "$LOG") 2>&1
+  cret=$?
+  [[ "$cerror" -eq 0 && $cret -ne 0 ]] && cerror=$cret
+  return $cret
 }
 
-# firebird specific
-#function ctrim {
-#  ctrim_tmp=$(mktemp /tmp/ctrim_tmp.XXXXXX)
-#  "$@" > $ctrim_tmp 2>&1
-#  cret=$?
-#  [[ "$cerror" -eq 0 && $cret -ne 0 ]] && cerror=$cret
-#  if test $cret -eq 0
-#  then
-#    # success, remove (-v) all gbak output (^ anchors to start of line)
-#    # remove tape's file names (line starts with /)
-#    # remove tape's Verify lines
-#    egrep -v "^gbak:|^Verify |^/" $ctrim_tmp>$ctrim_tmp.2
-#    mv $ctrim_tmp.2 $ctrim_tmp
-#  fi
-#  cat $ctrim_tmp
-#  rm $ctrim_tmp
-#  return $cret
-#}
-
-## USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters 
+# USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters
 function cnotify {
   EMAIL=${1?email}
   SUBJECT=${2?subject}
@@ -60,6 +47,7 @@ function cnotify {
   cnotify_tmp=$(mktemp "/tmp/cnotify_tmp.XXXXXXX")
   "$@" > $cnotify_tmp
   cret=$?
+  [[ "$cerror" -eq 0 && $cret -ne 0 ]] && cerror=$cret
   (
     echo "Subject: ($cret) $SUBJECT"
     echo 
