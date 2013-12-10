@@ -52,19 +52,20 @@ function clog {
 #  return $cret
 #}
 
-
-# re-work to use `mail`
-#function cnotify {
-#  EMAIL=${1?email}
-#  SUBJECT=${2?subject}
-#  shift 2
-#  cnotify_tmp=$(mktemp "/tmp/cnotify_tmp.XXXXXXX")
-#  "$@" > $cnotify_tmp 2>&1
-#  cret=$?
-#  [[ "$cerror" -eq 0 && $cret -ne 0 ]] && cerror=$cret
-#  mail_file.exp $EMAIL "($cret) $SUBJECT" $cnotify_tmp #> /dev/null
-#  rm $cnotify_tmp
-#  return $cret
-#}
-
+## USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters 
+function cnotify {
+  EMAIL=${1?email}
+  SUBJECT=${2?subject}
+  shift 2
+  cnotify_tmp=$(mktemp "/tmp/cnotify_tmp.XXXXXXX")
+  "$@" > $cnotify_tmp
+  cret=$?
+  (
+    echo "Subject: ($cret) $SUBJECT"
+    echo 
+    cat $cnotify_tmp
+  )|/usr/sbin/sendmail $EMAIL
+  rm $cnotify_tmp
+  return $cret
+}
 
