@@ -1,2 +1,5 @@
+sudo apt-get install encfs
 mkdir ~/Encrypted ~/.encfs/Encrypted -p
 gnome-encfs --add ~/.encfs/Encrypted ~/Encrypted
+encfs ~/.encfs/Encrypted ~/Encrypted
+

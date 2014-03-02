@@ -1,0 +1,5 @@
+name=${1?directory or file}
+mkdir -p "$HOME/Encrypted$(pwd)" &&
+mv $name "$HOME/Encrypted$(pwd)" &&
+ln -s "$HOME/Encrypted$(pwd)/$name"
+echo $? return
