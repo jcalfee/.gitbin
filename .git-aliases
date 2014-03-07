@@ -1,14 +1,18 @@
+## A few short-cuts for Git
 alias gdi="git diff"
 alias gst="git status"
 alias gstu="git status -uno"
+alias gci="git commit"
+alias gcim="git commit -m"
+alias gpu="git push"
 
-## gci, git check-in and push
-function gci {
-  c=$1
-  shift 1
-  git commit -m "$c" ${*-.}
-  git push
-}
+# gci, git check-in and push
+#function gci {
+#  echo c=$1
+#  echo shift 1
+#  echo git commit -m "$c" $*
+#  echo git push
+#}
 
 #function gdi {
 #  git diff ${*-.}

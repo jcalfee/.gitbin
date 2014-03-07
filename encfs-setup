@@ -1,3 +1,7 @@
+set -o errexit
+set -o xtrace
+#checks to make sure gnome-encfs is in the path (works with errexit)
+gnome-encfs --version
 sudo apt-get install encfs
 mkdir ~/Encrypted ~/.encfs/Encrypted -p
 gnome-encfs --add ~/.encfs/Encrypted ~/Encrypted

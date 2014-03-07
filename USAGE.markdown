@@ -84,22 +84,15 @@ output.
 
 
 
+./.git-aliases
+------------
+A few short-cuts for Git
+gci, git check-in and push
+
+
 ./gnome-encfs
 ------------
-hg clone http://bitbucket.org/obensonne/gnome-encfs
-hg clone ssh://hg@bitbucket.org/obensonne/gnome-encfs
-   gnome-encfs - GNOME keyring and auto-mount integration of EncFS folders.
-   Copyright (C) 2010 Oben Sonne <obensonne@googlemail.com>
-   This program is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-   You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+gnome-encfs - GNOME keyring and auto-mount integration of EncFS folders.
 
 
 
@@ -268,9 +261,9 @@ to sync this directory with the repository.
 
 ./usage-generate.sh
 ------------
-Generates github README file from script comments.
+Generates github USAGE file from script comments.
 
-Usage: ./readme.sh > README.markdown
+Usage: ./usage-generate.sh > USAGE.markdown
 
 
 
