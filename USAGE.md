@@ -12,7 +12,7 @@ Redundant new lines characters removed (like dos2unix)
 All parameters are passed to the sed command
 
 
-[./cmd_functions.sh](./cmd_functions.sh)
+[./.cmd_functions.sh](./.cmd_functions.sh)
 ------------
 Command wrapper functions
 

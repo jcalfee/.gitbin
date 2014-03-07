@@ -6,6 +6,7 @@
 ## these to add a log file, easy date printing (for timing), trace (like a single-command 
 ## xtrace output), and email notices.
 ## 
+## .cmd_functions, ctime, ctrace, cnotify, clog
 ## 
 ## Variables:
 ## cret = the return value of the last command (initialize: export cret)

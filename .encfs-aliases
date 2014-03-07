@@ -1,3 +1,8 @@
+## Aileses to mount and unmount an ~/Encrypted folder
+## 
+## Use after [./encfs-setup](./encfs-setup)
+## 
+## See [encfs-ln](encfs-ln) - relocate file or folder to ~/Encrypted and convert to a symbolic link
 alias encfs-mount='$HOME/.gitbin/gnome-encfs --mount Encrypted/'
 alias encfs-umount='sudo umount $HOME/Encrypted'
-#
+
