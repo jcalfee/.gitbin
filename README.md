@@ -39,7 +39,6 @@ export PATH=$PATH:$HOME/.gitbin
 
 . $HOME/.gitbin/.encfs-aliases
 . $HOME/.gitbin/.git-aliases
-. $HOME/.gitbin/.cmd_functions
 
 ```
 
