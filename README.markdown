@@ -1,10 +1,15 @@
+USAGE
+------------
+[USAGE.md](USAGE.md)
+
+
 .gitbin and .bashrc setup
 ------------
 This is a quick copy and paste method I use to get setup.  First make sure Git is installed:
 
 
 Copy and paste as it this applies to you:
-```
+```bash
 cd $HOME
 sudo apt-get install git
 git clone https://github.com/jcalfee/.gitbin.git

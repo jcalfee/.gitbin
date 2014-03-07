@@ -2,10 +2,17 @@
 
 ## Command wrapper functions
 ## 
+## Chain functions together in a selective order and prefix almost any bash command.  Use
+## these to add a log file, easy date printing (for timing), trace (like a single-command 
+## xtrace output), and email notices.
+## 
+## 
 ## Variables:
 ## cret = the return value of the last command (initialize: export cret)
 ## cerror = first error code of any command (initialize: export cerror=0)
 
+## 
+## ctime, prints date and time before and after command execution
 function ctime {
   date
   "$@"
@@ -15,6 +22,7 @@ function ctime {
   return $cret
 }
 
+## ctrace, shows the exit value
 function ctrace {
   echo "+ $@"
   "$@"
@@ -24,10 +32,12 @@ function ctrace {
   return $cret
 }
 
+## crun, combins ctime and ctrace
 function crun {
   ctime ctrace "$@"
 }
 
+## clog, append to a log file. std err and out are combined and printed to the console
 function clog {
   LOG="${1?log file}"
   shift 1
@@ -39,7 +49,8 @@ function clog {
   return $cret
 }
 
-# USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters
+## Depends on sendmail
+## USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters
 function cnotify {
   EMAIL=${1?email}
   SUBJECT=${2?subject}

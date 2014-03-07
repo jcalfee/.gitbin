@@ -1,7 +1,0 @@
-## Enables bash's errexit mode
-##
-## Usage: errout ./some-script "any parameters"
-##
-set -o errexit
-trap 'set +o errexit' EXIT
-. "$@"

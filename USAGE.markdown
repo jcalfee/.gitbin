@@ -1,4 +1,4 @@
-./clean-file
+[./clean-file](./clean-file)
 ------------
 Filter non-printable characters.  
 
@@ -12,16 +12,28 @@ Redundant new lines characters removed (like dos2unix)
 All parameters are passed to the sed command
 
 
-./cmd_functions.sh
+[./cmd_functions.sh](./cmd_functions.sh)
 ------------
 Command wrapper functions
+
+Chain functions together in a selective order and prefix almost any bash command.  Use
+these to add a log file, easy date printing (for timing), trace (like a single-command 
+xtrace output), and email notices.
+
 
 Variables:
 cret = the return value of the last command (initialize: export cret)
 cerror = first error code of any command (initialize: export cerror=0)
 
+ctime, prints date and time before and after command execution
+ctrace, shows the exit value
+crun, combins ctime and ctrace
+clog, append to a log file. std err and out are combined and printed to the console
+Depends on sendmail
+USAGE: cnotify email@mymail.com "subject" echo Output from any command and parameters
 
-./edi-cat
+
+[./edi-cat](./edi-cat)
 ------------
 
 Display (or cat) one or more EDI files provided on the
@@ -32,7 +44,7 @@ Depends: edi-isa (in same directory as this script)
 
 
 
-./edi-isa
+[./edi-isa](./edi-isa)
 ------------
 
 Sets environment variables by analyzing the ISA header
@@ -41,7 +53,7 @@ Usage: $0 EDI_FILE_NAME
 
 
 
-./edi-less
+[./edi-less](./edi-less)
 ------------
 
 Display (or less) one or more EDI files provided on the
@@ -52,7 +64,7 @@ Depends: edi-isa (in same directory as this script)
 
 
 
-./edi-type
+[./edi-type](./edi-type)
 ------------
 
 Show the type of each EDI message provided on the command-line.
@@ -62,41 +74,18 @@ Depends: edi-isa (in same directory as this script)
 
 
 
-./errexit
-------------
-Enables bash's errexit mode
-Usage: errout ./some-script "any parameters"
-
-
-./errout
-------------
-Prefix standard error lines and standard out lines with some string.
-
-Usage: errout ./some-script "any parameters"
-
-By default, prefixes standard error lines with ! and does not prefix 
-standard out lines by anything.  Set the 'error_prefix' or 
-'out_prefix' variables to customize.
-
-This is a first layer of simple formatting.  More advanced formatting
-logic (xterm color codes or HTML) may intercept and reformat this 
-output.
-
-
-
-./.git-aliases
+[./.git-aliases](./.git-aliases)
 ------------
 A few short-cuts for Git
-gci, git check-in and push
 
 
-./gnome-encfs
+[./gnome-encfs](./gnome-encfs)
 ------------
 gnome-encfs - GNOME keyring and auto-mount integration of EncFS folders.
 
 
 
-./ipsec-sonic-config
+[./ipsec-sonic-config](./ipsec-sonic-config)
 ------------
 INSTALL
 Debian/Ubuntu: sudo apt-get install openswan
@@ -112,39 +101,25 @@ Overwrite using variables:
 
 
 
-./mouse-2-ptr.sh
+[./mouse-2-ptr.sh](./mouse-2-ptr.sh)
 ------------
 Instructions to give second mouse its own pointer
 
 
-./mp3merge
+[./mp3merge](./mp3merge)
 ------------
 Merge multiple MP3 files into one MP3
 Corrects the headler length so many players show correct scrolling
 Recalc the variable bit rate
 
 
-./notify
-------------
-Run a script and notify based on conditions: 
- on_output,on_error (one or both)
-
-Notification is sent using 'mail' to the email address
-provided.  Standard output and standard error are 
-captured together and emailed in the body of the email.
-
-Depends On
-> sudo aptitude install mailutils
-
-
-
-./pathmunge
+[./pathmunge](./pathmunge)
 ------------
 Example:
  pathmunge bin # Adds bin to your PATH variable unless it is already there
 
 
-./prj-env
+[./prj-env](./prj-env)
 ------------
 Usage:
 
@@ -168,7 +143,7 @@ Prompts user then saves response in ~/.prj-env/my
    
 
 
-./rsync-host
+[./rsync-host](./rsync-host)
 ------------
 
 Calculates a path relative to the home directory.  That path is used to Sync 
@@ -202,12 +177,12 @@ put - sync from local directory to server
 Suffix commands to the main command: get-f, get-e, get-fed
 
 
-./smb-examples
+[./smb-examples](./smb-examples)
 ------------
 Samba Examples
 
 
-./ssh-authorize
+[./ssh-authorize](./ssh-authorize)
 ------------
 Usage: ssh-authorize [user@]hostname
 
@@ -218,7 +193,7 @@ Your default DSA key will be created and(or) used.  Keep the default name:
 $HOME/.ssh/id_dsa.pub
 
 
-./ssh-host
+[./ssh-host](./ssh-host)
 ------------
 Wrapps the SSH command adding support for alias host names.
 
@@ -248,18 +223,18 @@ Examples:
 
 
 
-./ssh-keygen-default
+[./ssh-keygen-default](./ssh-keygen-default)
 ------------
 Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
 
 
-./svn-sync
+[./svn-sync](./svn-sync)
 ------------
 Generate a preview and offer to execute any svn commands needed
 to sync this directory with the repository.
 
 
-./usage-generate.sh
+[./usage-generate.sh](./usage-generate.sh)
 ------------
 Generates github USAGE file from script comments.
 
@@ -267,7 +242,7 @@ Usage: ./usage-generate.sh > USAGE.markdown
 
 
 
-./vbox-examples
+[./vbox-examples](./vbox-examples)
 ------------
 Set XP activation parameters
 http://forums.virtualbox.org/viewtopic.php?t=9697#37931
@@ -277,13 +252,13 @@ Probe the machine where your license is activated:
 
 
 
-./vbox-module-load-fix
+[./vbox-module-load-fix](./vbox-module-load-fix)
 ------------
 If Ubuntu vbox bridged networking modules are needed and do not load,
 try this alternative method using insmod.
 
 
-./xtrace
+[./xtrace](./xtrace)
 ------------
 Enables bash's xtrace mode.
 Usage: xtrace ./some-script "any parameters"
