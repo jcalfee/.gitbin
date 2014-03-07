@@ -1,0 +1,24 @@
+alias gdi="git diff"
+alias gst="git status"
+alias gstu="git status -uno"
+
+## gci, git check-in and push
+function gci {
+  c=$1
+  shift 1
+  git commit -m "$c" ${*-.}
+  git push
+}
+
+#function gdi {
+#  git diff ${*-.}
+#}
+#
+#function gst {
+#  git status ${*-.}
+#}
+#
+#function gstu {
+#  git status -uno ${*-.}
+#}
+#
