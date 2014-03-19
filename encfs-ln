@@ -1,4 +1,5 @@
 name=${1?directory or file}
+set -o xtrace
 mkdir -p "$HOME/Encrypted$(pwd)" &&
 mv $name "$HOME/Encrypted$(pwd)" &&
 ln -s "$HOME/Encrypted$(pwd)/$name"
