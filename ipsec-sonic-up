@@ -13,7 +13,7 @@ test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
 test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
 test -e /var/run/pluto/pluto.ctl || echo "Wating for pluto.ctl" && sleep 1
 
-set -o verbose
+set -o xtrace
 sudo ipsec auto --add ${connection_name} 
 sudo ipsec whack --name ${connection_name} --initiate
 

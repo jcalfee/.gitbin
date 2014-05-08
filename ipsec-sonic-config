@@ -73,4 +73,5 @@ conn ${connection_name}
 
 eof
 
+sudo ipsec verify 
 echo Done
