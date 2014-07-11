@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Source this from a script to capture and `tee` standard error and standard 
+# out to a log file. Calling script must source this script.  For Example:
+#
+# . /usr/bin/logy /var/log/project/$0.log
+#
+# The logging uses >(process substitution). Process substitution is supported 
+# in shells like bash and zsh but is not supported in sh.
+
+_LOG=${1?log file}
+test $# -eq 1 || exit 1
+
+mkdir -p "$(dirname "$_LOG")"
+
+# Append stdout and stderr to log file
+exec > >(
+  echo -e "START\t$(date)" >> "$_LOG"
+  tee -a "$_LOG"
+  echo -e "END\t$(date)" >> "$_LOG"
+) 2>&1
+
