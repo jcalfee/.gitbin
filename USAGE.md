@@ -20,6 +20,7 @@ Chain functions together in a selective order and prefix almost any bash command
 these to add a log file, easy date printing (for timing), trace (like a single-command 
 xtrace output), and email notices.
 
+.cmd_functions, ctime, ctrace, cnotify, clog
 
 Variables:
 cret = the return value of the last command (initialize: export cret)
@@ -74,9 +75,24 @@ Depends: edi-isa (in same directory as this script)
 
 
 
+[./.encfs-aliases](./.encfs-aliases)
+------------
+Alias to mount and unmount an ~/Encrypted folder
+
+Use after [./encfs-setup](./encfs-setup)
+
+See [encfs-ln](encfs-ln) - relocate file or folder to ~/Encrypted and convert to a symbolic link
+
+
+[./encfs-setup](./encfs-setup)
+------------
+Setup and encrypt ~/Encrypted
+
+
 [./.git-aliases](./.git-aliases)
 ------------
 A few short-cuts for Git
+.git-aliases, examples: gci (checkin), gst (status), gstu (status ignoring non-checkins), gpu (push)
 
 
 [./gnome-encfs](./gnome-encfs)
@@ -232,6 +248,19 @@ Create DSA keypare. See $HOME/.ssh/id_dsa[.pub]"
 ------------
 Generate a preview and offer to execute any svn commands needed
 to sync this directory with the repository.
+
+
+[./timefile.sh](./timefile.sh)
+------------
+Depends: sudo apt-get xprintidle watch -y
+
+Record time entries under ~/.timefile/client1 every 10 minutes (unless idle).
+Usage: watch --interval=$((10 * 60)) ~/.gitbin/timefile.sh client1
+Record the start of a task
+Usage: ~/.gitbin/timefile.sh client1 "Updating About page"
+
+Record a task that was started 10 minutes ago
+Usage: ~/.gitbin/timefile.sh client1 "Updating About page" 10
 
 
 [./usage-generate.sh](./usage-generate.sh)
