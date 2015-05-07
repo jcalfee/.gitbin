@@ -1,13 +1,18 @@
 ## Depends: sudo apt-get xprintidle watch -y
-## 
+##  
 ## Record time entries under ~/.timefile/client1 every 10 minutes (unless idle).
-## Usage: watch --interval=$((10 * 60)) ~/.gitbin/timefile.sh client1
-##
-## Record the start of a task
-## Usage: ~/.gitbin/timefile.sh client1 "Updating About page"
+## `watch ~/.gitbin/timefile.sh client1`
 ## 
-## Record a task that was started 10 minutes ago
-## Usage: ~/.gitbin/timefile.sh client1 "Updating About page" 10
+## Record the start of a task:
+## `~/.gitbin/timefile.sh client1 "Updating About page"`
+##   
+## Record a task that was started 10 minutes ago:
+## `~/.gitbin/timefile.sh client1 "About page design discussion" 10`
+##  
+## Get back on task:
+## `~/.gitbin/timefile.sh client1 "Updating About page"`
+## 
+## See: ~/.timefile
 
 #set -o xtrace
 set -o errexit
