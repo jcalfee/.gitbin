@@ -4,15 +4,18 @@
 ## `watch ~/.gitbin/timefile.sh client1`
 ## 
 ## Record the start of a task:
+##
 ## `~/.gitbin/timefile.sh client1 "Updating About page"`
 ##   
 ## Record a task that was started 10 minutes ago:
+##
 ## `~/.gitbin/timefile.sh client1 "About page design discussion" 10`
 ##  
 ## Get back on task:
+##
 ## `~/.gitbin/timefile.sh client1 "Updating About page"`
 ## 
-## See: ~/.timefile
+## See folder: ~/.timefile
 
 #set -o xtrace
 set -o errexit
