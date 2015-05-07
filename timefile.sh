@@ -15,19 +15,20 @@ client=${1?which client?}
 task=$2
 task_past_minutes=${3-0}
 
-time_dir=`date "+$HOME/.timefile/$client/%Y/%m"`
-time_file=`date "+$HOME/.timefile/$client/%Y/%m/%Y-%m_Week%V.txt"`
-mkdir -p "$time_dir"
+time_dir="$HOME/.timefile"
+time_file="$HOME/.timefile/${client}.txt"
 
-#report
-echo "$time_file"
-tail -n 60 "$time_file"|sort -r
+mkdir -p "$time_dir"
 
 if [ ! -z "$task" ]
 then
   echo -e "`date --iso-8601=seconds -d "$task_past_minutes min ago"`\tTASK\t$task" >> "$time_file"
   exit
 fi
+
+#report
+echo "$time_file"
+test -e "$time_file" && tail -n 30 "$time_file"|sort
 
 if test -f ~/.timefile/.touch_$client
 then
