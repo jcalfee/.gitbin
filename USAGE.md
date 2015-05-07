@@ -258,7 +258,8 @@ to sync this directory with the repository.
 ------------
 Depends: sudo apt-get xprintidle watch -y
  
-Record time entries under ~/.timefile/client1 every 10 minutes (unless idle).
+Record time entries under ~/.timefile/client1 every 1 minute (unless idle).
+
 `watch ~/.gitbin/timefile.sh client1`
 
 Record the start of a task:
