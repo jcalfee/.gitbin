@@ -5,6 +5,7 @@ alias gdi="git diff ."
 alias gst="git status ."
 alias gstu="git status -uno ."
 alias gci="git commit . -m"
+alias gco="git checkout --"
 alias gpu="git push"
 
 # gci, git check-in and push
