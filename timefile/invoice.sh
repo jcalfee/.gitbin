@@ -1,4 +1,4 @@
-client=${1?client}
+client=${1-acme}
 
 fn=${client}_$(date --iso-8601=seconds).txt
 echo $fn

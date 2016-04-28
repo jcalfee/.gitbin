@@ -20,7 +20,7 @@
 
 #set -o xtrace
 set -o errexit
-client=${1?which client?}
+client=${1-acme}
 task=$2
 task_past_minutes=${3-0}
 
