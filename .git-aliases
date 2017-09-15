@@ -1,11 +1,9 @@
 ## A few short-cuts for Git
 ## .git-aliases, examples: gci (checkin), gst (status), gstu (status ignoring non-checkins), gpu (push)
 
-alias gdi="git diff ."
-alias gst="git status ."
+alias gdi="git diff"
+alias gst="git status"
 alias gstu="git status -uno ."
-alias gci="git commit . -m"
-alias gco="git checkout --"
 alias gpu="git push"
 
 # gci, git check-in and push
