@@ -1,11 +1,21 @@
-client=${1-acme}
-
-fn=${client}_$(date --iso-8601=seconds).txt
-echo $fn
-test -f $fn &&
-  echo File exists $fn &&
-  exit 1
+#task=${1-widget}
 
 set -o errexit
-mv $client.txt $fn
-for r in report_*.sh; do echo ./$r; cat $fn|./$r; echo; done
+
+for task in "$@"
+do
+  for r in report_*.sh
+  do
+    echo $(basename ./$r) $task
+    cat $task|./$r
+    echo
+  done
+done
+
+mkdir -p invoiced
+echo Copy and paste the following mv commands:
+for task in "$@"
+do
+  fn=invoiced/${task}_$(date --iso-8601=seconds).txt
+  echo mv $task $fn
+done
