@@ -10,7 +10,7 @@
     cmd="date -d "$1" '+%D'"
     cmd | getline result
     close(cmd)
-    if(minutes+0 <= 20)
+    if(minutes+0 <= 10)
         total_minutes[result]+=minutes
 }
 END{
